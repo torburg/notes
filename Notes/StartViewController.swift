@@ -10,8 +10,10 @@ import UIKit
 
 class StartViewController: UIViewController {
 
-    let noteList = FileNotebook.generateNotebook()
+    let noteList = FileNotebook.basicNotesList
     let reuseIdentifier = "note cell"
+    
+    @IBOutlet weak var tableView: UITableView!
     
     @IBAction func showSecondView(_ sender: Any) {
         let secondViewController = SecondViewController()
@@ -20,6 +22,8 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Notes"
+        
+        tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: reuseIdentifier)
         // Do any additional setup after loading the view.
     }
 
@@ -43,20 +47,30 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)
-        
-        if cell == nil {
-            cell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
-            print("new cell")
-        } else {
-            print("reuse cell")
-        }
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NoteTableViewCell
         let note = noteList[indexPath.row]
-        cell.imageView?.backgroundColor = .black
-        cell.textLabel?.text = note.title
-        cell.detailTextLabel?.text = note.content
-        cell.accessoryType = .disclosureIndicator
+        cell.title.text = note.title
+        cell.noteText.text = note.content
+        cell.noteColor.backgroundColor = note.color
+//        cell.imageView?.backgroundColor = .black
+//        cell.textLabel?.text = note.title
+//        cell.detailTextLabel?.text = note.content
+//        cell.accessoryType = .disclosureIndicator
+        
+//        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)
+//
+//        if cell == nil {
+//            cell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
+//            print("new cell")
+//        } else {
+//            print("reuse cell")
+//        }
+//
+//        let note = noteList[indexPath.row]
+//        cell.imageView?.backgroundColor = .black
+//        cell.textLabel?.text = note.title
+//        cell.detailTextLabel?.text = note.content
+//        cell.accessoryType = .disclosureIndicator
         
 //        cell.accessoryView
         
