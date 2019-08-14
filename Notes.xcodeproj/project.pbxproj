@@ -23,6 +23,8 @@
 		88199275230497CC00A4EA4C /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88199274230497CC00A4EA4C /* UIViewExtension.swift */; };
 		881992782304AB8100A4EA4C /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881992762304AB8100A4EA4C /* NoteTableViewCell.swift */; };
 		881992792304AB8100A4EA4C /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881992772304AB8100A4EA4C /* NoteTableViewCell.xib */; };
+		8819927E2304C2C000A4EA4C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819927C2304C2C000A4EA4C /* NoteViewController.swift */; };
+		8819927F2304C2C000A4EA4C /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8819927D2304C2C000A4EA4C /* NoteViewController.xib */; };
 		B41547D760289E94A1B6AF15 /* libPods-Notes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B59D584CCA7FDA869A81AA /* libPods-Notes.a */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		88199274230497CC00A4EA4C /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		881992762304AB8100A4EA4C /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		881992772304AB8100A4EA4C /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
+		8819927C2304C2C000A4EA4C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		8819927D2304C2C000A4EA4C /* NoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
 		98DCB36074C5D17C1BC8784D /* Pods-Notes.customconfig.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.customconfig.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.customconfig.xcconfig"; sourceTree = "<group>"; };
 		D8401B4D8C973983B6849EB5 /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
 		F4B59D584CCA7FDA869A81AA /* libPods-Notes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Notes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +117,8 @@
 				881992762304AB8100A4EA4C /* NoteTableViewCell.swift */,
 				881992772304AB8100A4EA4C /* NoteTableViewCell.xib */,
 				8819926D22FB3B1200A4EA4C /* GalleryViewController.swift */,
+				8819927C2304C2C000A4EA4C /* NoteViewController.swift */,
+				8819927D2304C2C000A4EA4C /* NoteViewController.xib */,
 				88199274230497CC00A4EA4C /* UIViewExtension.swift */,
 				8819926E22FB3B1200A4EA4C /* GalleryViewController.xib */,
 				8819924122FA06BB00A4EA4C /* SecondViewController.swift */,
@@ -251,6 +257,7 @@
 				8819924822FA09A900A4EA4C /* StartViewController.xib in Resources */,
 				880E59C822C4004D00761F2E /* LaunchScreen.storyboard in Resources */,
 				881992792304AB8100A4EA4C /* NoteTableViewCell.xib in Resources */,
+				8819927F2304C2C000A4EA4C /* NoteViewController.xib in Resources */,
 				880E59C522C4004D00761F2E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +309,7 @@
 				881992782304AB8100A4EA4C /* NoteTableViewCell.swift in Sources */,
 				880E59D122C4007100761F2E /* Note.swift in Sources */,
 				88199275230497CC00A4EA4C /* UIViewExtension.swift in Sources */,
+				8819927E2304C2C000A4EA4C /* NoteViewController.swift in Sources */,
 				8819924722FA09A900A4EA4C /* StartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
