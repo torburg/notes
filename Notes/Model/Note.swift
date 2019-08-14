@@ -26,7 +26,7 @@ struct Note {
     }
 }
 
-enum Importance : String {
+enum Importance : String, CaseIterable {
     case unimportant = "unimportant"
     case regular = "regular"
     case important = "important"

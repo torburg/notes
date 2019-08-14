@@ -80,5 +80,60 @@ class FileNotebook {
         }
         return fileUrl
     }
+    
+    static func generateNotebook() -> [Note] {
+        var fileNotebook: [Note] = []
+        let amount = 20
+        for index in 1...amount {
+            let title = "Title \(Int.random(in: 1...100))"
+            let content = "\(index)_Content"
+            let color = getRandomColor()
+            let importance = Importance.allCases.randomElement()!
+            let tomorrow = TimeInterval(60 * 60 * 24)
+            let selfDesctructDate = Date(timeInterval: tomorrow, since: Date())
+            let  note = Note(uid: UUID().uuidString, title: title, content: content, color: color, importance: importance, selfDestructDate: selfDesctructDate)
+            fileNotebook.append(note)
+        }
+        return fileNotebook
+    }
+    
+    
+    static var basicNotesList: [Note] = [
+        Note(
+            uid: "1",
+            title: "Title_1",
+            content: "contetetetete",
+            color: .black,
+            importance: Importance.important
+        ),
+        Note(
+            uid: "2",
+            title: "Title_2",
+            content: "kmakfm",
+            importance: Importance.important
+        ),
+        Note(
+            uid: "3",
+            title: "Title_3",
+            content: "123213313",
+            color: .blue,
+            importance: Importance.important
+        ),
+        Note(
+            uid: "4",
+            title: "Title_4",
+            content: "qkdpwd",
+            importance: Importance.important
+        )
+    ]
+}
+
+func getRandomColor() -> UIColor {
+    //Generate between 0 to 1
+    let red:CGFloat = CGFloat(drand48())
+    let green:CGFloat = CGFloat(drand48())
+    let blue:CGFloat = CGFloat(drand48())
+    
+    return UIColor(red:red, green: green, blue: blue, alpha: 1.0)
 }
 
