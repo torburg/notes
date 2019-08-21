@@ -13,7 +13,7 @@ class NoteTableViewCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var noteText: UILabel!
     @IBOutlet weak var noteColor: UIView!
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

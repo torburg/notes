@@ -10,8 +10,8 @@ import UIKit
 
 class StartViewController: UIViewController {
 
-    let noteList = FileNotebook.basicNotesList
-    let reuseIdentifier = "note cell"
+    let noteList = FileNotebook.generateNotebook()
+    let reuseIdentifier = "noteCell"
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -21,7 +21,7 @@ class StartViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Notes"
+//        title = "Notes"
         
         tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: reuseIdentifier)
         // Do any additional setup after loading the view.
@@ -41,6 +41,7 @@ class StartViewController: UIViewController {
 }
 
 extension StartViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return noteList.count
     }
@@ -52,30 +53,22 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         cell.title.text = note.title
         cell.noteText.text = note.content
         cell.noteColor.backgroundColor = note.color
-//        cell.imageView?.backgroundColor = .black
-//        cell.textLabel?.text = note.title
-//        cell.detailTextLabel?.text = note.content
-//        cell.accessoryType = .disclosureIndicator
-        
-//        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)
-//
-//        if cell == nil {
-//            cell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
-//            print("new cell")
-//        } else {
-//            print("reuse cell")
-//        }
-//
-//        let note = noteList[indexPath.row]
-//        cell.imageView?.backgroundColor = .black
-//        cell.textLabel?.text = note.title
-//        cell.detailTextLabel?.text = note.content
-//        cell.accessoryType = .disclosureIndicator
-        
-//        cell.accessoryView
+        cell.selectionStyle = .none
         
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let note = noteList[indexPath.row]
+        let title = note.title
+        let text = note.content
+        
+        let noteViewController = NoteViewController()
+        noteViewController.note = note
+        noteViewController.title = title
+        noteViewController.content = text
+
+        navigationController?.pushViewController(noteViewController, animated: true)
+    }
 }

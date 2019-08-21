@@ -10,12 +10,23 @@ import UIKit
 
 class NoteViewController: UIViewController {
 
-//    @IBOutlet weak var title: UITextField!
+    @IBOutlet weak var noteTitle: UITextField!
     @IBOutlet weak var noteText: UITextView!
+    
+//    override var title: String?
+    var content: String?
+    var note: Note? = nil
+    
+//    @IBOutlet weak var whiteImage: UIImageView!
+//    @IBOutlet weak var redImage: UIImageView!
+//    @IBOutlet weak var greenImage: UIImageView!
+    
+//    private var content: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        noteTitle.text = title
+        noteText.text = content
         // Do any additional setup after loading the view.
     }
 
