@@ -14,8 +14,8 @@ class NoteViewController: UIViewController {
     @IBOutlet weak var noteText: UITextView!
     
 //    override var title: String?
-    var content: String?
-    var note: Note? = nil
+//    var content: String?
+    var note: Note?
     
 //    @IBOutlet weak var whiteImage: UIImageView!
 //    @IBOutlet weak var redImage: UIImageView!
@@ -25,8 +25,8 @@ class NoteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        noteTitle.text = title
-        noteText.text = content
+        noteTitle.text = note?.title
+        noteText.text = note?.content
         // Do any additional setup after loading the view.
     }
 

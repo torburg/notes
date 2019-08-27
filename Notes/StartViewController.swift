@@ -61,13 +61,13 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let note = noteList[indexPath.row]
-        let title = note.title
-        let text = note.content
+//        let title = note.title
+//        let text = note.content
         
         let noteViewController = NoteViewController()
         noteViewController.note = note
-        noteViewController.title = title
-        noteViewController.content = text
+//        noteViewController.title = title
+//        noteViewController.content = text
 
         navigationController?.pushViewController(noteViewController, animated: true)
     }
