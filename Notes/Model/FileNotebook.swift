@@ -83,15 +83,41 @@ class FileNotebook {
     
     static func generateNotebook() -> [Note] {
         var fileNotebook: [Note] = []
-        let amount = 20
-        for index in 1...amount {
-            let title = "Title \(Int.random(in: 1...100))"
+        fileNotebook.append(Note(
+            uid: UUID().uuidString,
+            content: "Короткая такая заметочка",
+            importance: .regular,
+            expirationDate: tomorrow(),
+            category: .personal)
+        )
+        fileNotebook.append(Note(
+            uid: UUID().uuidString,
+            content: "Заметка уже слегка подлиннее, чем предыдущая",
+            importance: .regular,
+            expirationDate: tomorrow(),
+            category: .work,
+            reminder: true)
+        )
+        fileNotebook.append(Note(
+            uid: UUID().uuidString,
+            content: "Не то, что бы прям уж очень длинная заметка, но все-таки заметно длиннее, чем те две,          которые были до этого",
+            importance: .regular,
+            expirationDate: future(),
+            category: .personal)
+        )
+        fileNotebook.append(Note(
+            uid: UUID().uuidString,
+            content: "А у этой заметки содержание по-настоящему длинное-предлинное, даже ни в какое сравнение с          треями предыдущими не идет. А все отчего? Да просто от того, что нужно затестировать как-то             поведение ячейки таблицы, когда у нее в содержании находиться очень длинные текст. Даже не знаю,            стоит ли еще добавить что-нибудь к вышесказанному. Пожалуй, что и нет. Поэтому на сем и закончу.",
+            importance: .regular,
+            expirationDate: future(),
+            category: .family)
+        )
+        for index in 1...20 {
             let content = "\(index)_Content"
-            let color = getRandomColor()
             let importance = Importance.allCases.randomElement()!
-            let tomorrow = TimeInterval(60 * 60 * 24)
-            let selfDesctructDate = Date(timeInterval: tomorrow, since: Date())
-            let  note = Note(uid: UUID().uuidString, title: title, content: content, color: color, importance: importance, selfDestructDate: selfDesctructDate)
+            //            let tomorrow = TimeInterval(60 * 60 * 24)
+            let expirationDate = Date(timeInterval: 0, since: Date())
+            let  note = Note(uid: UUID().uuidString, content: content, importance: importance, expirationDate: expirationDate)
             fileNotebook.append(note)
         }
         return fileNotebook
@@ -101,39 +127,49 @@ class FileNotebook {
     static var basicNotesList: [Note] = [
         Note(
             uid: "1",
-            title: "Title_1",
             content: "contetetetete_afjna3kjfnkjwabfkjbwqkjfbawkjfbakjwbfkjabfkjwbfkjawbfkjbawkjfbkjawbfakwfbkwjbfkjawbfkjawbkjfbkjawbfkjawbkfjbawkjfbjkawbfjkwabfkjbwkjbfkjwabkjfbawkjbfkjawbfkjabwkjfbakwjfbkajwbfkjabfkbfkwabfkwabkfbwkfbakwjfbakwf",
-            color: .black,
-            importance: Importance.important
+            importance: Importance.important,
+            expirationDate: Date()
         ),
         Note(
             uid: "2",
-            title: "Title_2",
             content: "kmakfm",
-            importance: Importance.important
+            importance: Importance.important,
+            expirationDate: tomorrow()
         ),
         Note(
             uid: "3",
-            title: "Title_3",
             content: "123213313 afjna3kjfnkjwabfkjbwqkjfbawkjfbakjwbfkjabfkjwbfkjawbfkjbawkjfbkjawbfakwfbkwjbfkjawbfkjawbkjfbkjawbfkjawbkfjbawkjfbjkawbfjkwabfkjbwkjbfkjwabkjfbawkjbfkjawbfkjabwkjfbakwjfbkajwbfkjabfkbfkwabfkwabkfbwkfbakwjfbakwf",
-            color: .blue,
-            importance: Importance.important
+            importance: Importance.important,
+            expirationDate: Date()
         ),
         Note(
             uid: "4",
-            title: "Title_4",
             content: "qkdpwd",
-            importance: Importance.important
+            importance: Importance.important,
+            expirationDate: future()
         )
     ]
 }
 
-func getRandomColor() -> UIColor {
-    //Generate between 0 to 1
-    let red:CGFloat = CGFloat(drand48())
-    let green:CGFloat = CGFloat(drand48())
-    let blue:CGFloat = CGFloat(drand48())
+func tomorrow() -> Date {
     
-    return UIColor(red:red, green: green, blue: blue, alpha: 1.0)
+    var dateComponents = DateComponents()
+    dateComponents.setValue(1, for: .day); // +1 day
+    
+    let now = Date() // Current date
+    let tomorrow = Calendar.current.date(byAdding: dateComponents, to: now)  // Add the DateComponents
+    
+    return tomorrow!
+}
+func future() -> Date {
+    
+    var dateComponents = DateComponents()
+    dateComponents.setValue(2, for: .day); // +1 day
+    
+    let now = Date() // Current date
+    let tomorrow = Calendar.current.date(byAdding: dateComponents, to: now)  // Add the DateComponents
+    
+    return tomorrow!
 }
 

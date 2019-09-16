@@ -9,23 +9,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let startViewController = StartViewController()
-        let tabBarController = UITabBarController()
-        tabBarController.tabBar.barTintColor = .white
-        
-        let iconUnselected = UIImage(named: "icons8-rectangle-50")
-        let iconSelected = UIImage(named: "icons8-rectangle-48")
-        
+
         let navigationController = UINavigationController(rootViewController: startViewController)
-        navigationController.tabBarItem = UITabBarItem(title: "Notes", image: iconUnselected, selectedImage: iconSelected)
         navigationController.navigationBar.barTintColor = .white
         
-        let galleryViewController =  GalleryViewController()
-        galleryViewController.tabBarItem = UITabBarItem(title: "Gallery", image: iconUnselected, selectedImage: iconSelected)
-        
-        tabBarController.viewControllers = [navigationController, galleryViewController]
-        
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = tabBarController
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
         return true

@@ -3,26 +3,26 @@ import UIKit
 
 struct Note {
     let uid: String
-    let title: String
     let content: String
-    let color: UIColor
     let importance: Importance
-    let selfDestructDate: Date?
+    let expirationDate: Date
+    let category: Category?
+    let reminder: Bool
     
     init(
         uid: String = UUID().uuidString,
-        title: String,
         content: String,
-        color: UIColor = UIColor.white,
         importance: Importance,
-        selfDestructDate: Date? = nil
+        expirationDate: Date,
+        category: Category? = nil,
+        reminder: Bool = false
     ) {
         self.uid = uid
-        self.title = title
         self.content = content
-        self.color = color
         self.importance = importance
-        self.selfDestructDate = selfDestructDate
+        self.expirationDate = expirationDate
+        self.category = category
+        self.reminder = reminder
     }
 }
 
@@ -30,4 +30,10 @@ enum Importance : String, CaseIterable {
     case unimportant = "unimportant"
     case regular = "regular"
     case important = "important"
+}
+
+enum Category : String, CaseIterable {
+    case personal = "Personal"
+    case work = "Work"
+    case family = "Family"
 }

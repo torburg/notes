@@ -21,9 +21,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KQe-eg-sKq">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="KQe-eg-sKq">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="kqg-iw-XoU"/>
                         <outlet property="delegate" destination="-1" id="9En-m1-PQo"/>
@@ -31,11 +31,11 @@
                 </tableView>
             </subviews>
             <constraints>
-                <constraint firstItem="KQe-eg-sKq" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="9Ip-i7-R0Q"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KQe-eg-sKq" secondAttribute="bottom" id="N0z-8j-13F"/>
-                <constraint firstItem="KQe-eg-sKq" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Zlz-Wj-Y8U"/>
-                <constraint firstItem="KQe-eg-sKq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cMH-9u-PvZ"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KQe-eg-sKq" secondAttribute="trailing" id="rcA-aC-tFp"/>
+                <constraint firstItem="KQe-eg-sKq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="9Ip-i7-R0Q"/>
+                <constraint firstAttribute="bottom" secondItem="KQe-eg-sKq" secondAttribute="bottom" constant="34" id="N0z-8j-13F"/>
+                <constraint firstItem="KQe-eg-sKq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="Zlz-Wj-Y8U"/>
+                <constraint firstItem="KQe-eg-sKq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cMH-9u-PvZ"/>
+                <constraint firstAttribute="trailing" secondItem="KQe-eg-sKq" secondAttribute="trailing" id="rcA-aC-tFp"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="23" y="-139"/>
