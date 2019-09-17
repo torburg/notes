@@ -27,9 +27,9 @@ struct Note {
 }
 
 enum Importance : String, CaseIterable {
-    case unimportant = "unimportant"
-    case regular = "regular"
-    case important = "important"
+    case unimportant = "Unimportant"
+    case regular = "Regular"
+    case important = "Important"
 }
 
 enum Category : String, CaseIterable {
