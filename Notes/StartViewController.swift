@@ -17,23 +17,21 @@ class StartViewController: UIViewController {
         "Tomorrow",
         "Future"
     ]
+    let dateFormatter = DateFormatter()
     
     @IBOutlet weak var tableView: UITableView!
-//
-//    @IBAction func showSecondView(_ sender: Any) {
-//        let secondViewController = SecondViewController()
-//        navigationController?.pushViewController(secondViewController, animated: true)
-//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Notes"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: nil)
         
         tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: reuseIdentifier)
-        // Do any additional setup after loading the view.
+        self.tableView.tableFooterView = nil
     }
 }
 
@@ -48,22 +46,24 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
+        if sections[section] == "Today" {
+            return "\(sections[section]) \(dateFormatter.string(from: Date() ))"
+        } else {
+            return sections[section]
+        }
     }
-    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NoteTableViewCell
-        
-        //ToDo
-        print(indexPath.section)
         let note = getNotesbySection(indexPath.section)[indexPath.row]
         cell.onBind(note)
         
         return cell
     }
-    
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -78,8 +78,6 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     func getNotesbySection(_ section: Int) -> [Note] {
         
         var noteInSection: [Note]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
         
         switch sections[section] {
         case "Today":
