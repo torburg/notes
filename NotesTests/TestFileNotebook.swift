@@ -5,7 +5,6 @@ class TestFileNotebook: XCTestCase {
     
     let testNote = Note(
         uid: "12121212",
-        title: "My_title",
         content: "contetetetete",
         importance: Importance.important
     )
