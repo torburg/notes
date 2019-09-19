@@ -87,7 +87,7 @@ class FileNotebook {
             uid: UUID().uuidString,
             content: "Короткая такая заметочка",
             importance: .regular,
-            expirationDate: tomorrow(),
+            expirationDate: Date(),
             category: .personal)
         )
         fileNotebook.append(Note(
@@ -102,7 +102,7 @@ class FileNotebook {
             uid: UUID().uuidString,
             content: "Не то, что бы прям уж очень длинная заметка, но все-таки заметно длиннее, чем те две,          которые были до этого",
             importance: .regular,
-            expirationDate: future(),
+            expirationDate: tomorrow(),
             category: .personal)
         )
         fileNotebook.append(Note(

@@ -31,19 +31,16 @@ class NoteTableViewCell: UITableViewCell {
                 self.importance.image = UIImage(named: "regular_importance_mark")
         }
         
-        if let category = note.category {
-            switch category {
-            case .personal:
-                self.category.text = Category.personal.rawValue
-            case .work:
-                self.category.text = Category.work.rawValue
-            case .family:
-                self.category.text = Category.family.rawValue
-            }
-        } else {
-            self.category.text = ""
+       
+        switch note.category {
+        case .personal:
+            self.category.text = Category.personal.rawValue
+        case .work:
+            self.category.text = Category.work.rawValue
+        case .family:
+            self.category.text = Category.family.rawValue
         }
-
+   
         let formatter = DateFormatter()
         formatter.dateFormat = "dd"
         let dateStr = formatter.string(from: note.expirationDate)

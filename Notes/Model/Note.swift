@@ -6,7 +6,7 @@ struct Note {
     let content: String
     let importance: Importance
     let expirationDate: Date
-    let category: Category?
+    let category: Category
     let reminder: Bool
     
     init(
@@ -14,7 +14,7 @@ struct Note {
         content: String,
         importance: Importance,
         expirationDate: Date,
-        category: Category? = nil,
+        category: Category = .personal,
         reminder: Bool = false
     ) {
         self.uid = uid

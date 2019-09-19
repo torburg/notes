@@ -20,17 +20,23 @@ class NoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.noteText.text = note!.content
+        guard let note = self.note else {
+            return
+        }
+        
+//        if let content = note?.content {
+            self.noteText.text = note.content
+//        }r
         
         datePicker.minimumDate = Date()
-        if let category = note?.category {
-            let rowIndex = Category.allCases.firstIndex(of: category)!
-            categoryPicker.selectRow(rowIndex, inComponent: 0, animated: true)
-        }
-        if let importance = note?.importance {
-            let rowIndex = Importance.allCases.firstIndex(of: importance)!
-            importancePicker.selectRow(rowIndex, inComponent: 0, animated: true)
-        }
+//        if let category = note?.category {
+            let rowIndexCategory = Category.allCases.firstIndex(of: note.category)!
+            categoryPicker.selectRow(rowIndexCategory, inComponent: 0, animated: true)
+//        }
+//        if let importance = note?.importance {
+            let rowIndexImportance = Importance.allCases.firstIndex(of: note.importance)!
+            importancePicker.selectRow(rowIndexImportance, inComponent: 0, animated: true)
+//        }
     }
 }
 
