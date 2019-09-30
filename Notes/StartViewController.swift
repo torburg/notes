@@ -17,14 +17,12 @@ class StartViewController: UIViewController {
         "Tomorrow",
         "Future"
     ]
-    let dateFormatter = DateFormatter()
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Notes"
-        dateFormatter.dateFormat = "yyyy-MM-dd"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: nil)
@@ -47,7 +45,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if sections[section] == "Today" {
-            return "\(sections[section]) \(dateFormatter.string(from: Date() ))"
+            return "\(sections[section]) \(Date.formatter.string(from: Date() ))"
         } else {
             return sections[section]
         }
@@ -82,17 +80,17 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         switch sections[section] {
         case "Today":
             noteInSection = noteList.filter({
-                dateFormatter.string(from: $0.expirationDate) == dateFormatter.string(from: Date() )
+                Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date() )
                 
             })
         case "Tomorrow":
             noteInSection = noteList.filter({
-                dateFormatter.string(from: $0.expirationDate) == dateFormatter.string(from: tomorrow() )
+                Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.tomorrow)
                 
             })
         case "Future":
             noteInSection = noteList.filter({
-                dateFormatter.string(from: $0.expirationDate) > dateFormatter.string(from: tomorrow() )
+                Date.formatter.string(from: $0.expirationDate) > Date.formatter.string(from: Date.tomorrow)
                 
             })
         default:
@@ -102,22 +100,3 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-
-extension Date {
-    static var tomorrow:  Date { return Date().dayAfter }
-    var dayBefore: Date {
-        return Calendar.current.date(byAdding: .day, value: -1, to: noon)!
-    }
-    var dayAfter: Date {
-        return Calendar.current.date(byAdding: .day, value: 1, to: noon)!
-    }
-    var noon: Date {
-        return Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
-    }
-    var month: Int {
-        return Calendar.current.component(.month,  from: self)
-    }
-    var isLastDayOfMonth: Bool {
-        return dayAfter.month != month
-    }
-}

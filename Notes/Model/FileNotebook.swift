@@ -94,7 +94,7 @@ class FileNotebook {
             uid: UUID().uuidString,
             content: "Заметка уже слегка подлиннее, чем предыдущая",
             importance: .regular,
-            expirationDate: tomorrow(),
+            expirationDate: Date.tomorrow,
             category: .work,
             reminder: true)
         )
@@ -102,14 +102,14 @@ class FileNotebook {
             uid: UUID().uuidString,
             content: "Не то, что бы прям уж очень длинная заметка, но все-таки заметно длиннее, чем те две,          которые были до этого",
             importance: .regular,
-            expirationDate: tomorrow(),
+            expirationDate: Date.tomorrow,
             category: .personal)
         )
         fileNotebook.append(Note(
             uid: UUID().uuidString,
             content: "А у этой заметки содержание по-настоящему длинное-предлинное, даже ни в какое сравнение с          треями предыдущими не идет. А все отчего? Да просто от того, что нужно затестировать как-то             поведение ячейки таблицы, когда у нее в содержании находиться очень длинные текст. Даже не знаю,            стоит ли еще добавить что-нибудь к вышесказанному. Пожалуй, что и нет. Поэтому на сем и закончу.",
             importance: .regular,
-            expirationDate: future(),
+            expirationDate: Date.future,
             category: .family)
         )
         for index in 1...20 {
@@ -135,7 +135,7 @@ class FileNotebook {
             uid: "2",
             content: "kmakfm",
             importance: Importance.important,
-            expirationDate: tomorrow()
+            expirationDate: Date.tomorrow
         ),
         Note(
             uid: "3",
@@ -147,29 +147,8 @@ class FileNotebook {
             uid: "4",
             content: "qkdpwd",
             importance: Importance.important,
-            expirationDate: future()
+            expirationDate: Date.future
         )
     ]
-}
-
-func tomorrow() -> Date {
-    
-    var dateComponents = DateComponents()
-    dateComponents.setValue(1, for: .day); // +1 day
-    
-    let now = Date() // Current date
-    let tomorrow = Calendar.current.date(byAdding: dateComponents, to: now)  // Add the DateComponents
-    
-    return tomorrow!
-}
-func future() -> Date {
-    
-    var dateComponents = DateComponents()
-    dateComponents.setValue(2, for: .day); // +1 day
-    
-    let now = Date() // Current date
-    let tomorrow = Calendar.current.date(byAdding: dateComponents, to: now)  // Add the DateComponents
-    
-    return tomorrow!
 }
 

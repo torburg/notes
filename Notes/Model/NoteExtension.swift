@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 extension Note {
     
@@ -10,9 +10,7 @@ extension Note {
             result["importance"] = self.importance.rawValue
         }
         let date = self.expirationDate
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MMM-yyyy"
-        let dateStr = formatter.string(from: date)
+        let dateStr = Date.formatter.string(from: date)
         result["expirationDate"] = dateStr
         
         return result
@@ -33,9 +31,7 @@ extension Note {
         
         var expirationDate = Date()
         if let jsonDate = json["expirationDate"] as? String {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd-MMM-yyyy"
-            expirationDate = formatter.date(from: jsonDate)!
+            expirationDate = Date.formatter.date(from: jsonDate)!
         }
         return Note(uid: uid, content: content, importance: importance, expirationDate: expirationDate)
     }
