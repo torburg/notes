@@ -90,7 +90,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
             })
         case "Future":
             noteInSection = noteList.filter({
-                Date.formatter.string(from: $0.expirationDate) > Date.formatter.string(from: Date.tomorrow)
+                Date.formatter.string(from: $0.expirationDate) > Date.formatter.string(from: Date.future)
                 
             })
         default:

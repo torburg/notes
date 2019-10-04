@@ -54,12 +54,12 @@ class FileNotebook {
         
         var isDir: ObjCBool = false
         
-        let dirUrl = path.appendingPathComponent("Notes")
+        let dirUrl = path.appendingPathComponent("Deleted notes")
         if !FileManager.default.fileExists(atPath: dirUrl.path, isDirectory: &isDir), !isDir.boolValue {
             do {
                 try FileManager.default.createDirectory(at: dirUrl, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                print("Ошибка создания директории \"Notes\", \(error)")
+                print("Ошибка создания директории \"Deleted notes\", \(error)")
                 return nil
             }
         }
