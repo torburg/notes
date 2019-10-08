@@ -17,11 +17,7 @@ extension Date {
     }
     static var tomorrow:  Date { return Date().dayAfter }
     static var future: Date {
-        var dateComponents = DateComponents()
-        dateComponents.setValue(1, for: .day)
-        let now = Date()
-        let tomorrow = Calendar.current.date(byAdding: dateComponents, to: now)
-        return tomorrow!
+        return Date().dayAfter.dayAfter
     }
     var dayBefore: Date {
         return Calendar.current.date(byAdding: .day, value: -1, to: noon)!

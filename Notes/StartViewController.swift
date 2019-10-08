@@ -10,7 +10,7 @@ import UIKit
 
 class StartViewController: UIViewController {
 
-    let noteList: [Note] = FileNotebook.generateNotebook()
+    let noteList: [Note] = FileNotebook.generateNotebook().notes
     let reuseIdentifier = "noteCell"
     let sections: [String] = [
         "Today",
@@ -89,8 +89,9 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
                 
             })
         case "Future":
+            print(Date.formatter.string(from: Date.tomorrow))
             noteInSection = noteList.filter({
-                Date.formatter.string(from: $0.expirationDate) > Date.formatter.string(from: Date.future)
+                Date.formatter.string(from: $0.expirationDate) > Date.formatter.string(from: Date.tomorrow)
                 
             })
         default:

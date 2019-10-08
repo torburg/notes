@@ -4,6 +4,8 @@ import CocoaLumberjack
 class FileNotebook {
     private(set) var notes: [Note] = []
     
+    static var shared = FileNotebook()
+    
     public func add(_ note: Note) {
         guard !containsNote(note) else { return }
         notes.append(note)
@@ -81,16 +83,16 @@ class FileNotebook {
         return fileUrl
     }
     
-    static func generateNotebook() -> [Note] {
-        var fileNotebook: [Note] = []
-        fileNotebook.append(Note(
+    static func generateNotebook() -> FileNotebook {
+        
+        self.shared.add(Note(
             uid: UUID().uuidString,
             content: "Короткая такая заметочка",
             importance: .regular,
             expirationDate: Date(),
             category: .personal)
         )
-        fileNotebook.append(Note(
+        self.shared.add(Note(
             uid: UUID().uuidString,
             content: "Заметка уже слегка подлиннее, чем предыдущая",
             importance: .regular,
@@ -98,14 +100,14 @@ class FileNotebook {
             category: .work,
             reminder: true)
         )
-        fileNotebook.append(Note(
+        self.shared.add(Note(
             uid: UUID().uuidString,
             content: "Не то, что бы прям уж очень длинная заметка, но все-таки заметно длиннее, чем те две,          которые были до этого",
             importance: .regular,
             expirationDate: Date.tomorrow,
             category: .personal)
         )
-        fileNotebook.append(Note(
+        self.shared.add(Note(
             uid: UUID().uuidString,
             content: "А у этой заметки содержание по-настоящему длинное-предлинное, даже ни в какое сравнение с          треями предыдущими не идет. А все отчего? Да просто от того, что нужно затестировать как-то             поведение ячейки таблицы, когда у нее в содержании находиться очень длинные текст. Даже не знаю,            стоит ли еще добавить что-нибудь к вышесказанному. Пожалуй, что и нет. Поэтому на сем и закончу.",
             importance: .regular,
@@ -118,9 +120,9 @@ class FileNotebook {
             //            let tomorrow = TimeInterval(60 * 60 * 24)
             let expirationDate = Date(timeInterval: 0, since: Date())
             let  note = Note(uid: UUID().uuidString, content: content, importance: importance, expirationDate: expirationDate)
-            fileNotebook.append(note)
+            self.shared.add(note)
         }
-        return fileNotebook
+        return self.shared
     }
     
     
