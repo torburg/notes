@@ -12,7 +12,6 @@ class NoteTableViewCell: UITableViewCell {
     
     @IBOutlet weak var content: UILabel!
     @IBOutlet weak var importance: UIImageView!
-    @IBOutlet weak var date: UILabel!
     @IBOutlet weak var category: UILabel!
     @IBOutlet weak var reminder: UIImageView!
     
@@ -40,12 +39,6 @@ class NoteTableViewCell: UITableViewCell {
         case .family:
             self.category.text = Category.family.rawValue
         }
-   
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd"
-        let dateStr = formatter.string(from: note.expirationDate)
-        self.date.text = dateStr
-        
         if note.reminder {
             self.reminder.image = UIImage(named: "active_reminder")
         } else {

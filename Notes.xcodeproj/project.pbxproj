@@ -22,6 +22,9 @@
 		881992792304AB8100A4EA4C /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881992772304AB8100A4EA4C /* NoteTableViewCell.xib */; };
 		8819927E2304C2C000A4EA4C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819927C2304C2C000A4EA4C /* NoteViewController.swift */; };
 		8819927F2304C2C000A4EA4C /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8819927D2304C2C000A4EA4C /* NoteViewController.xib */; };
+		887ADE22234D2146001C031C /* LoadNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE21234D2146001C031C /* LoadNotes.swift */; };
+		887ADE24234D2151001C031C /* SaveNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE23234D2151001C031C /* SaveNotes.swift */; };
+		887ADE26234FE2BF001C031C /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE25234FE2BF001C031C /* BaseOperation.swift */; };
 		88DA6AF52342C0D000D814E8 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DA6AF42342C0D000D814E8 /* DateExtension.swift */; };
 		B41547D760289E94A1B6AF15 /* libPods-Notes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B59D584CCA7FDA869A81AA /* libPods-Notes.a */; };
 /* End PBXBuildFile section */
@@ -57,6 +60,9 @@
 		881992772304AB8100A4EA4C /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
 		8819927C2304C2C000A4EA4C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		8819927D2304C2C000A4EA4C /* NoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
+		887ADE21234D2146001C031C /* LoadNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotes.swift; sourceTree = "<group>"; };
+		887ADE23234D2151001C031C /* SaveNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNotes.swift; sourceTree = "<group>"; };
+		887ADE25234FE2BF001C031C /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		88DA6AF42342C0D000D814E8 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		98DCB36074C5D17C1BC8784D /* Pods-Notes.customconfig.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.customconfig.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.customconfig.xcconfig"; sourceTree = "<group>"; };
 		D8401B4D8C973983B6849EB5 /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +111,7 @@
 		880E59BC22C4004B00761F2E /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				887ADE1F234D204B001C031C /* Operations */,
 				880E59D322C8DEAF00761F2E /* Model */,
 				880E59BD22C4004B00761F2E /* AppDelegate.swift */,
 				8819924522FA09A900A4EA4C /* StartViewController.swift */,
@@ -140,6 +147,24 @@
 				880E5A0922E758C700761F2E /* TestFileNotebook.swift */,
 			);
 			path = NotesTests;
+			sourceTree = "<group>";
+		};
+		887ADE1F234D204B001C031C /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				887ADE20234D2059001C031C /* StorageOperations */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		887ADE20234D2059001C031C /* StorageOperations */ = {
+			isa = PBXGroup;
+			children = (
+				887ADE21234D2146001C031C /* LoadNotes.swift */,
+				887ADE23234D2151001C031C /* SaveNotes.swift */,
+				887ADE25234FE2BF001C031C /* BaseOperation.swift */,
+			);
+			path = StorageOperations;
 			sourceTree = "<group>";
 		};
 		E871EB2A6152BD2F0F6827BB /* Frameworks */ = {
@@ -295,7 +320,10 @@
 				880E59D522CBFAA600761F2E /* FileNotebook.swift in Sources */,
 				880E59D222C4007100761F2E /* NoteExtension.swift in Sources */,
 				880E59BE22C4004B00761F2E /* AppDelegate.swift in Sources */,
+				887ADE22234D2146001C031C /* LoadNotes.swift in Sources */,
+				887ADE24234D2151001C031C /* SaveNotes.swift in Sources */,
 				881992782304AB8100A4EA4C /* NoteTableViewCell.swift in Sources */,
+				887ADE26234FE2BF001C031C /* BaseOperation.swift in Sources */,
 				88DA6AF52342C0D000D814E8 /* DateExtension.swift in Sources */,
 				880E59D122C4007100761F2E /* Note.swift in Sources */,
 				88199275230497CC00A4EA4C /* UIViewExtension.swift in Sources */,

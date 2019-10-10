@@ -83,7 +83,7 @@ class FileNotebook {
         return fileUrl
     }
     
-    static func generateNotebook() -> FileNotebook {
+    static func generateNotebook() -> [Note] {
         
         self.shared.add(Note(
             uid: UUID().uuidString,
@@ -122,7 +122,7 @@ class FileNotebook {
             let  note = Note(uid: UUID().uuidString, content: content, importance: importance, expirationDate: expirationDate)
             self.shared.add(note)
         }
-        return self.shared
+        return self.shared.notes
     }
     
     

@@ -10,7 +10,7 @@ import UIKit
 
 class StartViewController: UIViewController {
 
-    let noteList: [Note] = FileNotebook.generateNotebook().notes
+    var noteList: [Note] = []
     let reuseIdentifier = "noteCell"
     let sections: [String] = [
         "Today",
@@ -30,6 +30,20 @@ class StartViewController: UIViewController {
         
         tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: reuseIdentifier)
         self.tableView.tableFooterView = nil
+        
+        reloadData()
+        print("reload date")
+    }
+    
+    func reloadData() {
+        //TODO
+        let loadOperation = LoadNotes.init(notebook: FileNotebook.shared)
+        guard let notes = loadOperation.result else {
+            self.noteList = FileNotebook.generateNotebook()
+            return
+        }
+        
+        self.noteList = notes
     }
 }
 
@@ -71,6 +85,24 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         noteViewController.note = note
         
         navigationController?.pushViewController(noteViewController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("\(indexPath)\n")
+            print(noteList[indexPath.row].content)
+            //TODO delete from DB (file), save to delete file and update UI
+            self.noteList.remove(at: indexPath.row)
+            
+//            FileNotebook.shared.remove(with: noteList[indexPath.row].uid)
+//            FileNotebook.shared.saveToFile()
+            tableView.deleteRows(at: [indexPath], with: .left)
+//            tableView.reloadData()
+        }
     }
     
     func getNotesbySection(_ section: Int) -> [Note] {
