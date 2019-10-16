@@ -93,15 +93,10 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("\(indexPath)\n")
-            print(noteList[indexPath.row].content)
-            //TODO delete from DB (file), save to delete file and update UI
-            self.noteList.remove(at: indexPath.row)
+            let note = getNotesbySection(indexPath.section)[indexPath.row]
+            self.noteList = noteList.filter({ $0.uid != note.uid })
             
-//            FileNotebook.shared.remove(with: noteList[indexPath.row].uid)
-//            FileNotebook.shared.saveToFile()
             tableView.deleteRows(at: [indexPath], with: .left)
-//            tableView.reloadData()
         }
     }
     
