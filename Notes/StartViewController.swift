@@ -148,13 +148,18 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
                 return
             }
             if indexPath != sourceIndexPath {
-//                let notesBySection = getNotesbySection(indexPath.section)
-//                let note = notesBySection[indexPath.row]
-//                
-//                let sourceNotesBySection = getNotesbySection(sourceIndexPath.section)
-//                let sourceNote = sourceNotesBySection[sourceIndexPath.row]
-//                swap(&(noteList.first(where: { $0.uid == note.uid })), &(noteList.first(where: { $0.uid == sourceNote.uid
-//                })))
+                let notesBySection = getNotesbySection(indexPath.section)
+                let note = notesBySection[indexPath.row]
+                guard let indexTo = noteList.firstIndex(where: { $0.uid == note.uid }) else {
+                    return
+                }
+                let sourceNotesBySection = getNotesbySection(sourceIndexPath.section)
+                let sourceNote = sourceNotesBySection[sourceIndexPath.row]
+                guard let indexFrom = noteList.firstIndex(where: { $0.uid == sourceNote.uid }) else {
+                    return
+                }
+                noteList.swapAt(indexFrom, indexTo)
+
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
                 self.sourceIndexPath = indexPath
             }
