@@ -18,6 +18,9 @@ class StartViewController: UIViewController {
         "Future"
     ]
     
+    fileprivate var sourceIndexPath: IndexPath?
+    fileprivate var snapshot: UIView?
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -30,6 +33,9 @@ class StartViewController: UIViewController {
         
         tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: reuseIdentifier)
         self.tableView.tableFooterView = nil
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGestureRecognized(_:)))
+        tableView.addGestureRecognizer(longPress)
         
         reloadData()
         print("reload date")
@@ -98,6 +104,104 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
             
             tableView.deleteRows(at: [indexPath], with: .left)
         }
+    }
+    
+    @objc func longPressGestureRecognized(_ longPress: UIGestureRecognizer) {
+        let state = longPress.state
+        let location = longPress.location(in: tableView)
+        guard let indexPath = self.tableView.indexPathForRow(at: location) else {
+            cleanup()
+            return
+        }
+        switch state {
+        case .began:
+            sourceIndexPath = indexPath
+            guard let cell = self.tableView.cellForRow(at: indexPath) else {
+                return
+            }
+            snapshot = self.getCustomSnapshotFromView(inputView: cell)
+            guard let snapshot = self.snapshot else {
+                return
+            }
+            var center = cell.center
+            snapshot.center = center
+            snapshot.alpha = 0.0
+            self.tableView.addSubview(snapshot)
+            UIView.animate(withDuration: 0.25, animations: {
+                center.y = location.y
+                snapshot.center = center
+                snapshot.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                snapshot.alpha = 0.98
+                cell.alpha = 0.0
+            }, completion: { (finished) in
+                cell.isHidden = true
+            })
+            break
+        case .changed:
+            guard  let snapshot = self.snapshot else {
+                return
+            }
+            var center = snapshot.center
+            center.y = location.y
+            snapshot.center = center
+            guard let sourceIndexPath = self.sourceIndexPath  else {
+                return
+            }
+            if indexPath != sourceIndexPath {
+//                let notesBySection = getNotesbySection(indexPath.section)
+//                let note = notesBySection[indexPath.row]
+//                
+//                let sourceNotesBySection = getNotesbySection(sourceIndexPath.section)
+//                let sourceNote = sourceNotesBySection[sourceIndexPath.row]
+//                swap(&(noteList.first(where: { $0.uid == note.uid })), &(noteList.first(where: { $0.uid == sourceNote.uid
+//                })))
+                self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
+                self.sourceIndexPath = indexPath
+            }
+            break
+        default:
+            guard let cell = self.tableView.cellForRow(at: indexPath) else {
+                return
+            }
+            guard  let snapshot = self.snapshot else {
+                return
+            }
+            cell.isHidden = false
+            cell.alpha = 0.0
+            UIView.animate(withDuration: 0.25, animations: {
+                snapshot.center = cell.center
+                snapshot.transform = CGAffineTransform.identity
+                snapshot.alpha = 0
+                cell.alpha = 1
+            }, completion: { (finished) in
+                self.cleanup()
+            })
+        }
+    }
+    
+    private func cleanup() {
+        self.sourceIndexPath = nil
+        snapshot?.removeFromSuperview()
+        self.snapshot = nil
+    }
+    
+    func getCustomSnapshotFromView(inputView: UIView) -> UIView? {
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
+        if let currentContext = UIGraphicsGetCurrentContext() {
+            inputView.layer.render(in: currentContext)
+        }
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
+        UIGraphicsEndImageContext()
+        let snapshot = UIImageView(image: image)
+        snapshot.layer.masksToBounds = false
+        snapshot.layer.cornerRadius = 0
+        snapshot.layer.shadowOffset = CGSize(width: -5, height: 0)
+        snapshot.layer.shadowRadius = 5
+        snapshot.layer.shadowOpacity = 0.4
+        return snapshot
     }
     
     func getNotesbySection(_ section: Int) -> [Note] {
