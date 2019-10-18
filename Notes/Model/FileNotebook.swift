@@ -110,7 +110,7 @@ class FileNotebook {
             expirationDate: Date.future,
             category: .family)
         )
-        for index in 1...20 {
+        for index in 1...2 {
             let content = "\(index)_Content"
             let importance = Importance.allCases.randomElement()!
             //            let tomorrow = TimeInterval(60 * 60 * 24)

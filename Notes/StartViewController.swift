@@ -38,11 +38,12 @@ class StartViewController: UIViewController {
         tableView.addGestureRecognizer(longPress)
         
         reloadData()
-        print("reload date")
     }
     
     func reloadData() {
         //TODO
+        print("reload date")
+
         let loadOperation = LoadNotes.init(notebook: FileNotebook.shared)
         guard let notes = loadOperation.result else {
             self.noteList = FileNotebook.generateNotebook()
@@ -83,6 +84,10 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("maldmaldw")
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -97,15 +102,23 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let note = getNotesbySection(indexPath.section)[indexPath.row]
-            self.noteList = noteList.filter({ $0.uid != note.uid })
-            
-            tableView.deleteRows(at: [indexPath], with: .left)
-        }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
     }
     
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+            let note = self.getNotesbySection(indexPath.section)[indexPath.row]
+            self.noteList = self.noteList.filter({ $0.uid != note.uid })
+            self.tableView.deleteRows(at: [indexPath], with: .left)
+            completion(true)
+        }
+        action.backgroundColor = .red
+        
+        return action
+    }
+
     @objc func longPressGestureRecognized(_ longPress: UIGestureRecognizer) {
         let state = longPress.state
         let location = longPress.location(in: tableView)
@@ -159,9 +172,11 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
                     return
                 }
                 noteList.swapAt(indexFrom, indexTo)
-
+                
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
                 self.sourceIndexPath = indexPath
+                updateSections(sourceIndexPath, indexPath)
+//                reloadData()
             }
             break
         default:
@@ -207,6 +222,16 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         snapshot.layer.shadowRadius = 5
         snapshot.layer.shadowOpacity = 0.4
         return snapshot
+    }
+    
+    //ToDo
+    func updateSections(_ sourceIndexPath: IndexPath, _ indexPath: IndexPath) {
+        let sourceSection = sourceIndexPath.first
+        let sourceRow = sourceIndexPath.last
+        
+        let destSection = indexPath.first
+        let destRow = indexPath.last
+
     }
     
     func getNotesbySection(_ section: Int) -> [Note] {

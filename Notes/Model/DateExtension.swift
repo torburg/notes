@@ -12,7 +12,7 @@ import Foundation
 extension Date {
     static var formatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "dd-MM-yyyy"
         return formatter
     }
     static var tomorrow:  Date { return Date().dayAfter }
