@@ -12,10 +12,25 @@ class StartViewController: UIViewController {
 
     var noteList: [Note] = []
     let reuseIdentifier = "noteCell"
-    let sections: [String] = [
-        "Today",
-        "Tomorrow",
-        "Future"
+    
+    enum When: String, CaseIterable {
+        case today = "Today"
+        case tomorrow = "Tomorrow"
+        case future = "Future"
+        
+        static var allValues: [When] {
+            return [
+                .today,
+                .tomorrow,
+                .future
+            ]
+        }
+    }
+
+    var sections: [ When: [Note] ] = [
+        When.today: [],
+        When.tomorrow: [],
+        When.future: []
     ]
     
     fileprivate var sourceIndexPath: IndexPath?
@@ -47,10 +62,12 @@ class StartViewController: UIViewController {
         let loadOperation = LoadNotes.init(notebook: FileNotebook.shared)
         guard let notes = loadOperation.result else {
             self.noteList = FileNotebook.generateNotebook()
+            setNotesBySection()
             return
         }
         
         self.noteList = notes
+        setNotesBySection()
     }
 }
 
@@ -65,10 +82,11 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if sections[section] == "Today" {
-            return "\(sections[section]) \(Date.formatter.string(from: Date() ))"
+        let date = When.allValues[section]
+        if date == .today {
+            return "\(When.today.rawValue) \(Date.formatter.string(from: Date() ))"
         } else {
-            return sections[section]
+            return date.rawValue
         }
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -111,6 +129,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
             let note = self.getNotesbySection(indexPath.section)[indexPath.row]
             self.noteList = self.noteList.filter({ $0.uid != note.uid })
+            self.setNotesBySection()
             self.tableView.deleteRows(at: [indexPath], with: .left)
             completion(true)
         }
@@ -175,7 +194,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
                 self.sourceIndexPath = indexPath
-                updateSections(sourceIndexPath, indexPath)
+//                updateSections(sourceIndexPath, indexPath)
 //                reloadData()
             }
             break
@@ -235,30 +254,38 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func getNotesbySection(_ section: Int) -> [Note] {
-        
-        var noteInSection: [Note]
-        
-        switch sections[section] {
-        case "Today":
-            noteInSection = noteList.filter({
-                Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date() )
-                
-            })
-        case "Tomorrow":
-            noteInSection = noteList.filter({
-                Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.tomorrow)
-                
-            })
-        case "Future":
-            print(Date.formatter.string(from: Date.tomorrow))
-            noteInSection = noteList.filter({
-                Date.formatter.string(from: $0.expirationDate) > Date.formatter.string(from: Date.tomorrow)
-                
-            })
-        default:
-            noteInSection = []
+        guard let notesInSection = sections[ When.allValues[section] ] else {
+            return []
         }
-        return noteInSection
+        return notesInSection
+    }
+    
+    func setNotesBySection() {
+        let noteList = self.noteList
+        
+        for section in sections {
+            switch section.key {
+            case .today:
+                let noteInSection = noteList.filter({
+                    Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date() )
+                })
+                self.sections[.today] = noteInSection
+                break
+            case .tomorrow:
+                let noteInSection = noteList.filter({
+                    Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.tomorrow )
+                })
+                self.sections[.tomorrow] = noteInSection
+                break
+            case .future:
+                let noteInSection = noteList.filter({
+                    Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.future )
+                })
+                self.sections[.future] = noteInSection
+                break
+            }
+        }
     }
 }
+
 
