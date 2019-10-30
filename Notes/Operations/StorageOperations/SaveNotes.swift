@@ -11,7 +11,7 @@ import Foundation
 class SaveNotes: BaseOperation {
     private let note: Note
     
-    init(note: Note, fileNotebook: FileNotebook) {
+    init(note: Note, to fileNotebook: FileNotebook) {
         self.note = note
         super.init(notebook: fileNotebook)
     }

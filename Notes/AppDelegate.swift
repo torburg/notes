@@ -14,6 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if FileNotebook.shared.notes.isEmpty {
             FileNotebook.generateNotebook()
         }
+//        do {
+//            try FileNotebook.shared.saveToFile()
+//        } catch {
+//
+//        }
         
         let navigationController = UINavigationController(rootViewController: startViewController)
         navigationController.navigationBar.barTintColor = .white

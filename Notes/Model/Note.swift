@@ -9,13 +9,14 @@ struct Note {
     let reminder: Bool
     
     init(
+        uid: String = UUID().uuidString,
         content: String,
         importance: Importance,
         expirationDate: Date,
         category: Category = .personal,
         reminder: Bool = false
     ) {
-        self.uid = UUID().uuidString
+        self.uid = uid
         self.content = content
         self.importance = importance
         self.expirationDate = expirationDate

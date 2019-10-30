@@ -120,7 +120,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
             let note = self.getNotesbySection(indexPath.section)[indexPath.row]
             self.noteList = self.noteList!.filter({ $0.uid != note.uid })
 
-            let deleteOp = RemoveNote(note: note, fileNoteBook: FileNotebook.shared)
+            let deleteOp = RemoveNote(note: note, from: FileNotebook.shared)
             deleteOp.main()
             
             self.sections[ When.allValues[indexPath.section] ]?.removeAll(where: { $0.uid == note.uid })
@@ -175,8 +175,6 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
             guard let sourceIndexPath = self.sourceIndexPath  else {
                 return
             }
-
-            ///!Reload sections, not NoteList
             if indexPath != sourceIndexPath {
 //                let notesBySection = getNotesbySection(indexPath.section)
 //                let note = notesBySection[indexPath.row]
@@ -186,10 +184,34 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
                 let sourceNotesBySection = getNotesbySection(sourceIndexPath.section)
                 let sourceNote = sourceNotesBySection[sourceIndexPath.row]
 
+                let section = When.allValues[indexPath.section]
+                let date : Date = {
+                    switch section {
+                    case .today:
+                        return Date()
+                    case .tomorrow:
+                        return Date.tomorrow
+                    case .future:
+                        return Date.future
+                    }
+                }()
+                //ToDo need to save place of Note in Table
+                let note = Note(
+                    uid: sourceNote.uid,
+                    content: sourceNote.content,
+                    importance: sourceNote.importance,
+                    expirationDate: date,
+                    category: sourceNote.category,
+                    reminder: sourceNote.reminder
+                )
+                let remove = RemoveNote(note: sourceNote, from: FileNotebook.shared)
+                remove.main()
+                let save = SaveNotes(note: note, to: FileNotebook.shared)
+                save.main()
                 
                 self.sections[ When.allValues[sourceIndexPath.section] ]?.removeAll(where: { $0.uid == sourceNote.uid })
                 self.sections[ When.allValues[indexPath.section] ]?.insert(sourceNote, at: indexPath.row)
-                //change date when saving notelist
+
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
                 self.sourceIndexPath = indexPath
             }

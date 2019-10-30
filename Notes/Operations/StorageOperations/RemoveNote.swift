@@ -11,9 +11,9 @@ import UIKit
 class RemoveNote: BaseOperation {
     let note: Note
     
-    init(note: Note, fileNoteBook: FileNotebook) {
+    init(note: Note, from fileNotebook: FileNotebook) {
         self.note = note
-        super.init(notebook: fileNoteBook)
+        super.init(notebook: fileNotebook)
     }
     
     override func main() {
