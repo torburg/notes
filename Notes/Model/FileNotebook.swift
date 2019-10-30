@@ -19,15 +19,11 @@ class FileNotebook {
         notes = notes.filter {$0.uid != uid}
     }
     
-    public func saveToFile() {
+    public func saveToFile() throws {
         if let fileUrlValue = getFileUrl() {
             let arr: [[String: Any]] = notes.map{$0.json}
-            do {
-                let jsdata = try JSONSerialization.data(withJSONObject: arr, options: [])
-                try jsdata.write(to: fileUrlValue)
-            } catch {
-                print("Ошибка записи в файл, \(error)")
-            }
+            let jsdata = try JSONSerialization.data(withJSONObject: arr, options: [])
+            try jsdata.write(to: fileUrlValue)
         }
     }
     
@@ -83,7 +79,7 @@ class FileNotebook {
         return fileUrl
     }
     
-    static func generateNotebook() -> [Note] {
+    static func generateNotebook() {
         
         self.shared.add(Note(
             content: "Короткая такая заметочка",
@@ -118,7 +114,7 @@ class FileNotebook {
             let  note = Note(content: content, importance: importance, expirationDate: expirationDate)
             self.shared.add(note)
         }
-        return self.shared.notes
+//        return self.shared.notes
     }
     
     

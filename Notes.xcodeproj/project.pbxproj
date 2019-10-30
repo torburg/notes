@@ -22,6 +22,7 @@
 		881992792304AB8100A4EA4C /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881992772304AB8100A4EA4C /* NoteTableViewCell.xib */; };
 		8819927E2304C2C000A4EA4C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819927C2304C2C000A4EA4C /* NoteViewController.swift */; };
 		8819927F2304C2C000A4EA4C /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8819927D2304C2C000A4EA4C /* NoteViewController.xib */; };
+		8866E2AA236A0CCF00AED83E /* RemoveNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866E2A9236A0CCF00AED83E /* RemoveNote.swift */; };
 		887ADE22234D2146001C031C /* LoadNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE21234D2146001C031C /* LoadNotes.swift */; };
 		887ADE24234D2151001C031C /* SaveNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE23234D2151001C031C /* SaveNotes.swift */; };
 		887ADE26234FE2BF001C031C /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE25234FE2BF001C031C /* BaseOperation.swift */; };
@@ -60,6 +61,7 @@
 		881992772304AB8100A4EA4C /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
 		8819927C2304C2C000A4EA4C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		8819927D2304C2C000A4EA4C /* NoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
+		8866E2A9236A0CCF00AED83E /* RemoveNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNote.swift; sourceTree = "<group>"; };
 		887ADE21234D2146001C031C /* LoadNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotes.swift; sourceTree = "<group>"; };
 		887ADE23234D2151001C031C /* SaveNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNotes.swift; sourceTree = "<group>"; };
 		887ADE25234FE2BF001C031C /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				887ADE21234D2146001C031C /* LoadNotes.swift */,
 				887ADE23234D2151001C031C /* SaveNotes.swift */,
 				887ADE25234FE2BF001C031C /* BaseOperation.swift */,
+				8866E2A9236A0CCF00AED83E /* RemoveNote.swift */,
 			);
 			path = StorageOperations;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				88DA6AF52342C0D000D814E8 /* DateExtension.swift in Sources */,
 				880E59D122C4007100761F2E /* Note.swift in Sources */,
 				88199275230497CC00A4EA4C /* UIViewExtension.swift in Sources */,
+				8866E2AA236A0CCF00AED83E /* RemoveNote.swift in Sources */,
 				8819927E2304C2C000A4EA4C /* NoteViewController.swift in Sources */,
 				8819924722FA09A900A4EA4C /* StartViewController.swift in Sources */,
 			);

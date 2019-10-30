@@ -12,6 +12,7 @@ class LoadNotes: BaseOperation {
     var result: [Note]?
     
     override func main() {
+        notebook.loadFromFile()
         result = notebook.notes
     }
 }

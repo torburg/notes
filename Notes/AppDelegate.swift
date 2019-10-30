@@ -9,7 +9,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let startViewController = StartViewController()
-
+        
+        FileNotebook.shared.loadFromFile()
+        if FileNotebook.shared.notes.isEmpty {
+            FileNotebook.generateNotebook()
+        }
+        
         let navigationController = UINavigationController(rootViewController: startViewController)
         navigationController.navigationBar.barTintColor = .white
         

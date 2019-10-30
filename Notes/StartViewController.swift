@@ -56,14 +56,8 @@ class StartViewController: UIViewController {
     }
     
     func reloadData() {
-//        let loadOperation = LoadNotes.init(notebook: FileNotebook.shared)
-//        guard let notes = loadOperation.result else {
-        if self.noteList == nil || self.noteList?.isEmpty == true {
-            self.noteList = FileNotebook.generateNotebook()
-            setNotesBySection()
-            return
-        }
-        setNotesBySection()
+        self.noteList = FileNotebook.shared.notes
+        setSectionsWithNotes()
     }
 }
 
@@ -125,6 +119,9 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
             let note = self.getNotesbySection(indexPath.section)[indexPath.row]
             self.noteList = self.noteList!.filter({ $0.uid != note.uid })
+
+            let deleteOp = RemoveNote(note: note, fileNoteBook: FileNotebook.shared)
+            deleteOp.main()
             
             self.sections[ When.allValues[indexPath.section] ]?.removeAll(where: { $0.uid == note.uid })
             self.tableView.deleteRows(at: [indexPath], with: .left)
@@ -136,7 +133,6 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     @objc func longPressGestureRecognized(_ longPress: UIGestureRecognizer) {
-        print("long press")
         let location = longPress.location(in: tableView)
         guard let indexPath = self.tableView.indexPathForRow(at: location) else {
             return
@@ -250,7 +246,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         return notesInSection
     }
     
-    func setNotesBySection() {
+    func setSectionsWithNotes() {
         let noteList = self.noteList!
         for section in sections {
             switch section.key {
