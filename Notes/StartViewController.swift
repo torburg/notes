@@ -10,7 +10,7 @@ import UIKit
 
 class StartViewController: UIViewController {
 
-    var noteList: [Note] = []
+    var noteList: [Note]?
     let reuseIdentifier = "noteCell"
     
     enum When: String, CaseIterable {
@@ -56,17 +56,13 @@ class StartViewController: UIViewController {
     }
     
     func reloadData() {
-        //TODO
-        print("reload date")
-
-        let loadOperation = LoadNotes.init(notebook: FileNotebook.shared)
-        guard let notes = loadOperation.result else {
+//        let loadOperation = LoadNotes.init(notebook: FileNotebook.shared)
+//        guard let notes = loadOperation.result else {
+        if self.noteList == nil || self.noteList?.isEmpty == true {
             self.noteList = FileNotebook.generateNotebook()
             setNotesBySection()
             return
         }
-        
-        self.noteList = notes
         setNotesBySection()
     }
 }
@@ -128,8 +124,9 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
             let note = self.getNotesbySection(indexPath.section)[indexPath.row]
-            self.noteList = self.noteList.filter({ $0.uid != note.uid })
-            self.setNotesBySection()
+            self.noteList = self.noteList!.filter({ $0.uid != note.uid })
+            
+            self.sections[ When.allValues[indexPath.section] ]?.removeAll(where: { $0.uid == note.uid })
             self.tableView.deleteRows(at: [indexPath], with: .left)
             completion(true)
         }
@@ -139,19 +136,19 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     @objc func longPressGestureRecognized(_ longPress: UIGestureRecognizer) {
-        let state = longPress.state
+        print("long press")
         let location = longPress.location(in: tableView)
         guard let indexPath = self.tableView.indexPathForRow(at: location) else {
-            cleanup()
             return
         }
+        let state = longPress.state
         switch state {
         case .began:
-            sourceIndexPath = indexPath
+            self.sourceIndexPath = indexPath
             guard let cell = self.tableView.cellForRow(at: indexPath) else {
                 return
             }
-            snapshot = self.getCustomSnapshotFromView(inputView: cell)
+            self.snapshot = self.getCustomSnapshotFromView(inputView: cell)
             guard let snapshot = self.snapshot else {
                 return
             }
@@ -170,7 +167,10 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
             })
             break
         case .changed:
-            guard  let snapshot = self.snapshot else {
+//            guard let cell = self.tableView.cellForRow(at: indexPath) else {
+//                return
+//            }
+            guard let snapshot = self.snapshot else {
                 return
             }
             var center = snapshot.center
@@ -179,23 +179,23 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
             guard let sourceIndexPath = self.sourceIndexPath  else {
                 return
             }
+
+            ///!Reload sections, not NoteList
             if indexPath != sourceIndexPath {
-                let notesBySection = getNotesbySection(indexPath.section)
-                let note = notesBySection[indexPath.row]
-                guard let indexTo = noteList.firstIndex(where: { $0.uid == note.uid }) else {
-                    return
-                }
+//                let notesBySection = getNotesbySection(indexPath.section)
+//                let note = notesBySection[indexPath.row]
+//                guard let indexTo = noteList!.firstIndex(where: { $0.uid == note.uid }) else {
+//                    return
+//                }
                 let sourceNotesBySection = getNotesbySection(sourceIndexPath.section)
                 let sourceNote = sourceNotesBySection[sourceIndexPath.row]
-                guard let indexFrom = noteList.firstIndex(where: { $0.uid == sourceNote.uid }) else {
-                    return
-                }
-                noteList.swapAt(indexFrom, indexTo)
+
                 
+                self.sections[ When.allValues[sourceIndexPath.section] ]?.removeAll(where: { $0.uid == sourceNote.uid })
+                self.sections[ When.allValues[indexPath.section] ]?.insert(sourceNote, at: indexPath.row)
+                //change date when saving notelist
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
                 self.sourceIndexPath = indexPath
-//                updateSections(sourceIndexPath, indexPath)
-//                reloadData()
             }
             break
         default:
@@ -242,17 +242,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
         snapshot.layer.shadowOpacity = 0.4
         return snapshot
     }
-    
-    //ToDo
-    func updateSections(_ sourceIndexPath: IndexPath, _ indexPath: IndexPath) {
-        let sourceSection = sourceIndexPath.first
-        let sourceRow = sourceIndexPath.last
-        
-        let destSection = indexPath.first
-        let destRow = indexPath.last
 
-    }
-    
     func getNotesbySection(_ section: Int) -> [Note] {
         guard let notesInSection = sections[ When.allValues[section] ] else {
             return []
@@ -261,8 +251,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func setNotesBySection() {
-        let noteList = self.noteList
-        
+        let noteList = self.noteList!
         for section in sections {
             switch section.key {
             case .today:
