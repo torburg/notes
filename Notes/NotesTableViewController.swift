@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
+class NotesTableViewController: UIViewController {
 
     var noteList: [Note]?
     let reuseIdentifier = "noteCell"
@@ -61,7 +61,7 @@ class StartViewController: UIViewController {
     }
 }
 
-extension StartViewController: UITableViewDataSource, UITableViewDelegate {
+extension NotesTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return getNotesbySection(section).count
