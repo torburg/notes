@@ -10,6 +10,7 @@ import Foundation
 
 class SaveNotes: BaseOperation {
     private let note: Note
+//    private let index: IndexPath
     
     init(note: Note, to fileNotebook: FileNotebook) {
         self.note = note

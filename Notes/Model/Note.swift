@@ -2,6 +2,7 @@ import Foundation
 
 struct Note {
     let uid: String
+    let position: Int
     let content: String
     let importance: Importance
     let expirationDate: Date
@@ -10,6 +11,7 @@ struct Note {
     
     init(
         uid: String = UUID().uuidString,
+        position: Int,
         content: String,
         importance: Importance,
         expirationDate: Date,
@@ -17,6 +19,7 @@ struct Note {
         reminder: Bool = false
     ) {
         self.uid = uid
+        self.position = position
         self.content = content
         self.importance = importance
         self.expirationDate = expirationDate

@@ -198,6 +198,7 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
                 //ToDo need to save place of Note in Table
                 let note = Note(
                     uid: sourceNote.uid,
+                    position: indexPath.row,
                     content: sourceNote.content,
                     importance: sourceNote.importance,
                     expirationDate: date,
@@ -209,6 +210,13 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
                 let save = SaveNotes(note: note, to: FileNotebook.shared)
                 save.main()
                 
+                //ToDo Update all indexes after insertion in section
+                //ToDo Add 2 || 1 classes, one of them loads & fills table, another get and save it. may be one else to update
+                
+//                let notestoUpdate = getNotesbySection(indexPath.section)
+//                    .filter( {$0.position >= indexPath.row} )
+//                    .map( {$0.position = $0.position + 1 } )
+//
                 self.sections[ When.allValues[sourceIndexPath.section] ]?.removeAll(where: { $0.uid == sourceNote.uid })
                 self.sections[ When.allValues[indexPath.section] ]?.insert(sourceNote, at: indexPath.row)
 
@@ -276,19 +284,19 @@ extension StartViewController: UITableViewDataSource, UITableViewDelegate {
                 let noteInSection = noteList.filter({
                     Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date() )
                 })
-                self.sections[.today] = noteInSection
+                self.sections[.today] = noteInSection.sorted(by: { $0.position < $1.position })
                 break
             case .tomorrow:
                 let noteInSection = noteList.filter({
                     Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.tomorrow )
                 })
-                self.sections[.tomorrow] = noteInSection
+                self.sections[.tomorrow] = noteInSection.sorted(by: { $0.position < $1.position })
                 break
             case .future:
                 let noteInSection = noteList.filter({
                     Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.future )
                 })
-                self.sections[.future] = noteInSection
+                self.sections[.future] = noteInSection.sorted(by: { $0.position < $1.position } )
                 break
             }
         }

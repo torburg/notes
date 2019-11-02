@@ -82,12 +82,14 @@ class FileNotebook {
     static func generateNotebook() {
         
         self.shared.add(Note(
+            position: 2,
             content: "Короткая такая заметочка",
             importance: .regular,
             expirationDate: Date(),
             category: .personal)
         )
         self.shared.add(Note(
+            position: 0,
             content: "Заметка уже слегка подлиннее, чем предыдущая",
             importance: .regular,
             expirationDate: Date.tomorrow,
@@ -95,50 +97,27 @@ class FileNotebook {
             reminder: true)
         )
         self.shared.add(Note(
+            position: 1,
             content: "Не то, что бы прям уж очень длинная заметка, но все-таки заметно длиннее, чем те две,          которые были до этого",
             importance: .regular,
             expirationDate: Date.tomorrow,
             category: .personal)
         )
         self.shared.add(Note(
+            position: 0,
             content: "А у этой заметки содержание по-настоящему длинное-предлинное, даже ни в какое сравнение с          треями предыдущими не идет. А все отчего? Да просто от того, что нужно затестировать как-то             поведение ячейки таблицы, когда у нее в содержании находиться очень длинные текст. Даже не знаю,            стоит ли еще добавить что-нибудь к вышесказанному. Пожалуй, что и нет. Поэтому на сем и закончу.",
             importance: .regular,
             expirationDate: Date.future,
             category: .family)
         )
         for index in 1...2 {
+            let position = index-1
             let content = "\(index)_Content"
             let importance = Importance.allCases.randomElement()!
-            //            let tomorrow = TimeInterval(60 * 60 * 24)
             let expirationDate = Date(timeInterval: 0, since: Date())
-            let  note = Note(content: content, importance: importance, expirationDate: expirationDate)
+            let  note = Note(position: position, content: content, importance: importance, expirationDate: expirationDate)
             self.shared.add(note)
         }
-//        return self.shared.notes
     }
-    
-    
-    static var basicNotesList: [Note] = [
-        Note(
-            content: "contetetetete_afjna3kjfnkjwabfkjbwqkjfbawkjfbakjwbfkjabfkjwbfkjawbfkjbawkjfbkjawbfakwfbkwjbfkjawbfkjawbkjfbkjawbfkjawbkfjbawkjfbjkawbfjkwabfkjbwkjbfkjwabkjfbawkjbfkjawbfkjabwkjfbakwjfbkajwbfkjabfkbfkwabfkwabkfbwkfbakwjfbakwf",
-            importance: Importance.important,
-            expirationDate: Date()
-        ),
-        Note(
-            content: "kmakfm",
-            importance: Importance.important,
-            expirationDate: Date.tomorrow
-        ),
-        Note(
-            content: "123213313 afjna3kjfnkjwabfkjbwqkjfbawkjfbakjwbfkjabfkjwbfkjawbfkjbawkjfbkjawbfakwfbkwjbfkjawbfkjawbkjfbkjawbfkjawbkfjbawkjfbjkawbfjkwabfkjbwkjbfkjwabkjfbawkjbfkjawbfkjabwkjfbakwjfbkajwbfkjabfkbfkwabfkwabkfbwkfbakwjfbakwf",
-            importance: Importance.important,
-            expirationDate: Date()
-        ),
-        Note(
-            content: "qkdpwd",
-            importance: Importance.important,
-            expirationDate: Date.future
-        )
-    ]
 }
 
