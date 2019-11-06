@@ -6,6 +6,12 @@ class FileNotebook {
     
     static var shared = FileNotebook()
     
+    // TODO: - Make add by index
+//    if (notes.count >= index) {
+//    notes.insert(nore, at: index)
+//    } else {
+//    notes.append(note)
+//    }
     public func add(_ note: Note) {
         guard !containsNote(note) else { return }
         notes.append(note)

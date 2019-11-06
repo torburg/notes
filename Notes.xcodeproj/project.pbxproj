@@ -16,12 +16,13 @@
 		880E5A0122E755CC00761F2E /* NotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880E5A0022E755CC00761F2E /* NotesTests.swift */; };
 		880E5A0A22E758C700761F2E /* TestFileNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880E5A0922E758C700761F2E /* TestFileNotebook.swift */; };
 		8819924722FA09A900A4EA4C /* NoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819924522FA09A900A4EA4C /* NoteTableViewController.swift */; };
-		8819924822FA09A900A4EA4C /* NoteTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8819924622FA09A900A4EA4C /* NoteTableViewController.xib */; };
 		88199275230497CC00A4EA4C /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88199274230497CC00A4EA4C /* UIViewExtension.swift */; };
 		881992782304AB8100A4EA4C /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881992762304AB8100A4EA4C /* NoteTableViewCell.swift */; };
 		881992792304AB8100A4EA4C /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881992772304AB8100A4EA4C /* NoteTableViewCell.xib */; };
-		8819927E2304C2C000A4EA4C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819927C2304C2C000A4EA4C /* NoteViewController.swift */; };
 		8819927F2304C2C000A4EA4C /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8819927D2304C2C000A4EA4C /* NoteViewController.xib */; };
+		88277738236E3FE6004C4A2A /* NoteSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88277737236E3FE6004C4A2A /* NoteSection.swift */; };
+		8848F2D7236F863000BB2EE4 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8848F2D6236F863000BB2EE4 /* NoteViewController.swift */; };
+		8848F2E523736C1400BB2EE4 /* NoteTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8848F2E423736C1400BB2EE4 /* NoteTableViewController.xib */; };
 		8866E2AA236A0CCF00AED83E /* RemoveNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866E2A9236A0CCF00AED83E /* RemoveNote.swift */; };
 		887ADE22234D2146001C031C /* LoadNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE21234D2146001C031C /* LoadNotes.swift */; };
 		887ADE24234D2151001C031C /* SaveNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE23234D2151001C031C /* SaveNotes.swift */; };
@@ -55,12 +56,13 @@
 		880E5A0222E755CC00761F2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		880E5A0922E758C700761F2E /* TestFileNotebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFileNotebook.swift; sourceTree = "<group>"; };
 		8819924522FA09A900A4EA4C /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
-		8819924622FA09A900A4EA4C /* NoteTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewController.xib; sourceTree = "<group>"; };
 		88199274230497CC00A4EA4C /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		881992762304AB8100A4EA4C /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		881992772304AB8100A4EA4C /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
-		8819927C2304C2C000A4EA4C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		8819927D2304C2C000A4EA4C /* NoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
+		88277737236E3FE6004C4A2A /* NoteSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSection.swift; sourceTree = "<group>"; };
+		8848F2D6236F863000BB2EE4 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		8848F2E423736C1400BB2EE4 /* NoteTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoteTableViewController.xib; path = Notes/Controller/NoteTableViewController.xib; sourceTree = SOURCE_ROOT; };
 		8866E2A9236A0CCF00AED83E /* RemoveNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNote.swift; sourceTree = "<group>"; };
 		887ADE21234D2146001C031C /* LoadNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotes.swift; sourceTree = "<group>"; };
 		887ADE23234D2151001C031C /* SaveNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNotes.swift; sourceTree = "<group>"; };
@@ -115,15 +117,10 @@
 			children = (
 				887ADE1F234D204B001C031C /* Operations */,
 				880E59D322C8DEAF00761F2E /* Model */,
-				880E59BD22C4004B00761F2E /* AppDelegate.swift */,
-				8819924522FA09A900A4EA4C /* NoteTableViewController.swift */,
-				8819924622FA09A900A4EA4C /* NoteTableViewController.xib */,
-				881992762304AB8100A4EA4C /* NoteTableViewCell.swift */,
-				881992772304AB8100A4EA4C /* NoteTableViewCell.xib */,
-				8819927C2304C2C000A4EA4C /* NoteViewController.swift */,
-				8819927D2304C2C000A4EA4C /* NoteViewController.xib */,
-				88199274230497CC00A4EA4C /* UIViewExtension.swift */,
+				88277739236F855C004C4A2A /* Controller */,
+				8848F2D5236F859B00BB2EE4 /* View */,
 				880E59C422C4004D00761F2E /* Assets.xcassets */,
+				880E59BD22C4004B00761F2E /* AppDelegate.swift */,
 				880E59C622C4004D00761F2E /* LaunchScreen.storyboard */,
 				880E59C922C4004D00761F2E /* Info.plist */,
 			);
@@ -137,6 +134,7 @@
 				880E59D022C4007100761F2E /* NoteExtension.swift */,
 				880E59CF22C4007100761F2E /* Note.swift */,
 				88DA6AF42342C0D000D814E8 /* DateExtension.swift */,
+				88277737236E3FE6004C4A2A /* NoteSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -149,6 +147,27 @@
 				880E5A0922E758C700761F2E /* TestFileNotebook.swift */,
 			);
 			path = NotesTests;
+			sourceTree = "<group>";
+		};
+		88277739236F855C004C4A2A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8819924522FA09A900A4EA4C /* NoteTableViewController.swift */,
+				8848F2D6236F863000BB2EE4 /* NoteViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8848F2D5236F859B00BB2EE4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				88199274230497CC00A4EA4C /* UIViewExtension.swift */,
+				8819927D2304C2C000A4EA4C /* NoteViewController.xib */,
+				881992762304AB8100A4EA4C /* NoteTableViewCell.swift */,
+				8848F2E423736C1400BB2EE4 /* NoteTableViewController.xib */,
+				881992772304AB8100A4EA4C /* NoteTableViewCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		887ADE1F234D204B001C031C /* Operations */ = {
@@ -273,7 +292,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8819924822FA09A900A4EA4C /* NoteTableViewController.xib in Resources */,
+				8848F2E523736C1400BB2EE4 /* NoteTableViewController.xib in Resources */,
 				880E59C822C4004D00761F2E /* LaunchScreen.storyboard in Resources */,
 				881992792304AB8100A4EA4C /* NoteTableViewCell.xib in Resources */,
 				8819927F2304C2C000A4EA4C /* NoteViewController.xib in Resources */,
@@ -320,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8848F2D7236F863000BB2EE4 /* NoteViewController.swift in Sources */,
 				880E59D522CBFAA600761F2E /* FileNotebook.swift in Sources */,
 				880E59D222C4007100761F2E /* NoteExtension.swift in Sources */,
 				880E59BE22C4004B00761F2E /* AppDelegate.swift in Sources */,
@@ -331,7 +351,7 @@
 				880E59D122C4007100761F2E /* Note.swift in Sources */,
 				88199275230497CC00A4EA4C /* UIViewExtension.swift in Sources */,
 				8866E2AA236A0CCF00AED83E /* RemoveNote.swift in Sources */,
-				8819927E2304C2C000A4EA4C /* NoteViewController.swift in Sources */,
+				88277738236E3FE6004C4A2A /* NoteSection.swift in Sources */,
 				8819924722FA09A900A4EA4C /* NoteTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

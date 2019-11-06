@@ -1,5 +1,5 @@
 //
-//  StartViewController.swift
+//  NoteTableViewController.swift
 //  Notes
 //
 //  Created by Maksim Torburg on 06/08/2019.
@@ -8,10 +8,18 @@
 
 import UIKit
 
-class NotesTableViewController: UIViewController {
+class NoteTableViewController: UIViewController {
 
     var noteList: [Note]?
     let reuseIdentifier = "noteCell"
+    
+    var sections: [ When: [Note] ] = [
+        When.today: [],
+        When.tomorrow: [],
+        When.future: []
+    ]
+    
+//    var sections = [NoteSection]()
     
     enum When: String, CaseIterable {
         case today = "Today"
@@ -26,12 +34,6 @@ class NotesTableViewController: UIViewController {
             ]
         }
     }
-
-    var sections: [ When: [Note] ] = [
-        When.today: [],
-        When.tomorrow: [],
-        When.future: []
-    ]
     
     fileprivate var sourceIndexPath: IndexPath?
     fileprivate var snapshot: UIView?
@@ -61,7 +63,7 @@ class NotesTableViewController: UIViewController {
     }
 }
 
-extension NotesTableViewController: UITableViewDataSource, UITableViewDelegate {
+extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return getNotesbySection(section).count
@@ -195,7 +197,7 @@ extension NotesTableViewController: UITableViewDataSource, UITableViewDelegate {
                         return Date.future
                     }
                 }()
-                //ToDo need to save place of Note in Table
+                // TODO: need to save place of Note in Table
                 let note = Note(
                     uid: sourceNote.uid,
                     position: indexPath.row,
@@ -210,8 +212,8 @@ extension NotesTableViewController: UITableViewDataSource, UITableViewDelegate {
                 let save = SaveNotes(note: note, to: FileNotebook.shared)
                 save.main()
                 
-                //ToDo Update all indexes after insertion in section
-                //ToDo Add 2 || 1 classes, one of them loads & fills table, another get and save it. may be one else to update
+                // TODO: Update all indexes after insertion in section
+                // TODO: Add 2 || 1 classes, one of them loads & fills table, another get and save it. may be one else to update
                 
 //                let notestoUpdate = getNotesbySection(indexPath.section)
 //                    .filter( {$0.position >= indexPath.row} )
