@@ -11,31 +11,13 @@ import UIKit
 class NoteTableViewController: UIViewController {
 
     var noteList: [Note]?
-    let reuseIdentifier = "noteCell"
+    var data = [ TableSection: NoteSection ]()
     
-    var sections: [ When: [Note] ] = [
-        When.today: [],
-        When.tomorrow: [],
-        When.future: []
-    ]
-    
-//    var sections = [NoteSection]()
-    
-    enum When: String, CaseIterable {
-        case today = "Today"
-        case tomorrow = "Tomorrow"
-        case future = "Future"
-        
-        static var allValues: [When] {
-            return [
-                .today,
-                .tomorrow,
-                .future
-            ]
-        }
+    enum TableSection: Int, CaseIterable {
+        case today = 0, tomorrow, future
     }
     
-    fileprivate var sourceIndexPath: IndexPath?
+    fileprivate var selectedCellIndexPath: IndexPath?
     fileprivate var snapshot: UIView?
     
     @IBOutlet weak var tableView: UITableView!
@@ -48,7 +30,7 @@ class NoteTableViewController: UIViewController {
                                                             action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: nil)
         
-        tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: reuseIdentifier)
+        tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: NoteTableViewCell.reuseIdentifier)
         self.tableView.tableFooterView = nil
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGestureRecognized(_:)))
@@ -66,19 +48,27 @@ class NoteTableViewController: UIViewController {
 extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getNotesbySection(section).count
+        let tableSection = TableSection.allCases[section]
+        guard let rows = data[tableSection] else {
+            return 0
+        }
+        return rows.values.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return TableSection.allCases.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let date = When.allValues[section]
-        if date == .today {
-            return "\(When.today.rawValue) \(Date.formatter.string(from: Date() ))"
-        } else {
-            return date.rawValue
+        let period = TableSection(rawValue: section) ?? TableSection.today
+        let date = Date.formatter.string(from: Date())
+        switch period {
+        case TableSection.today:
+            return "Today \(date)"
+        case TableSection.tomorrow:
+            return "Tomorrow"
+        case TableSection.future:
+            return "Future"
         }
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -87,10 +77,15 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NoteTableViewCell
-        let note = getNotesbySection(indexPath.section)[indexPath.row]
-        cell.onBind(note)
+        let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath) as! NoteTableViewCell
         
+        if let tableSection = TableSection(rawValue: indexPath.section),
+            let dataSection = data[tableSection] {
+                let cellModel = dataSection.values[indexPath.row]
+                cell.onBind(cellModel)
+
+                return cell
+        }
         return cell
     }
     
@@ -101,9 +96,14 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let note = getNotesbySection(indexPath.section)[indexPath.row]
+        guard let tableSection = TableSection(rawValue: indexPath.section),
+            let dataSection = data[tableSection] else {
+                return
+        }
+        let dataCell = dataSection.values[indexPath.row]
+        // TODO: rename NoteViewController to CellViewController
         let noteViewController = NoteViewController()
-        noteViewController.note = note
+        noteViewController.data = dataCell
         
         navigationController?.pushViewController(noteViewController, animated: true)
     }
@@ -119,13 +119,19 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
-            let note = self.getNotesbySection(indexPath.section)[indexPath.row]
+            guard let tableSection = TableSection(rawValue: indexPath.section),
+                let dataSection = self.data[tableSection] else {
+                    return
+            }
+            let note = dataSection.values[indexPath.row]
+            
             self.noteList = self.noteList!.filter({ $0.uid != note.uid })
 
             let deleteOp = RemoveNote(note: note, from: FileNotebook.shared)
             deleteOp.main()
             
-            self.sections[ When.allValues[indexPath.section] ]?.removeAll(where: { $0.uid == note.uid })
+            self.data[tableSection]?.removeItem(identidier: note.uid)
+            
             self.tableView.deleteRows(at: [indexPath], with: .left)
             completion(true)
         }
@@ -142,7 +148,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
         let state = longPress.state
         switch state {
         case .began:
-            self.sourceIndexPath = indexPath
+            self.selectedCellIndexPath = indexPath
             guard let cell = self.tableView.cellForRow(at: indexPath) else {
                 return
             }
@@ -174,21 +180,21 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             var center = snapshot.center
             center.y = location.y
             snapshot.center = center
-            guard let sourceIndexPath = self.sourceIndexPath  else {
+            guard let sourceIndexPath = self.selectedCellIndexPath  else {
                 return
             }
             if indexPath != sourceIndexPath {
-//                let notesBySection = getNotesbySection(indexPath.section)
-//                let note = notesBySection[indexPath.row]
-//                guard let indexTo = noteList!.firstIndex(where: { $0.uid == note.uid }) else {
-//                    return
-//                }
-                let sourceNotesBySection = getNotesbySection(sourceIndexPath.section)
-                let sourceNote = sourceNotesBySection[sourceIndexPath.row]
+                guard let sourceTableSection = TableSection(rawValue: sourceIndexPath.section),
+                    let dataSection = data[sourceTableSection] else {
+                        return
+                }
+                let sourceNote = dataSection.values[sourceIndexPath.row]
 
-                let section = When.allValues[indexPath.section]
+                guard let tableSection = TableSection(rawValue: indexPath.section) else {
+                    return
+                }
                 let date : Date = {
-                    switch section {
+                    switch tableSection {
                     case .today:
                         return Date()
                     case .tomorrow:
@@ -214,16 +220,11 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 // TODO: Update all indexes after insertion in section
                 // TODO: Add 2 || 1 classes, one of them loads & fills table, another get and save it. may be one else to update
-                
-//                let notestoUpdate = getNotesbySection(indexPath.section)
-//                    .filter( {$0.position >= indexPath.row} )
-//                    .map( {$0.position = $0.position + 1 } )
-//
-                self.sections[ When.allValues[sourceIndexPath.section] ]?.removeAll(where: { $0.uid == sourceNote.uid })
-                self.sections[ When.allValues[indexPath.section] ]?.insert(sourceNote, at: indexPath.row)
+                self.data[sourceTableSection]?.removeItem(identidier: sourceNote.uid)
+                self.data[tableSection]?.insertItem(note: sourceNote, index: indexPath.row)
 
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
-                self.sourceIndexPath = indexPath
+                self.selectedCellIndexPath = indexPath
             }
             break
         default:
@@ -247,7 +248,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func cleanup() {
-        self.sourceIndexPath = nil
+        self.selectedCellIndexPath = nil
         snapshot?.removeFromSuperview()
         self.snapshot = nil
     }
@@ -271,38 +272,34 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
         return snapshot
     }
 
-    func getNotesbySection(_ section: Int) -> [Note] {
-        guard let notesInSection = sections[ When.allValues[section] ] else {
-            return []
-        }
-        return notesInSection
-    }
-    
     func setSectionsWithNotes() {
         let noteList = self.noteList!
-        for section in sections {
-            switch section.key {
-            case .today:
-                let noteInSection = noteList.filter({
+        
+        for period in TableSection.allCases {
+            let sectionIndex = period.rawValue
+            switch sectionIndex {
+            case 0:
+                let notesInSection = noteList.filter({
                     Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date() )
                 })
-                self.sections[.today] = noteInSection.sorted(by: { $0.position < $1.position })
+                data[period] = NoteSection(notes: notesInSection, index: sectionIndex)
                 break
-            case .tomorrow:
-                let noteInSection = noteList.filter({
+            case 1:
+                let notesInSection = noteList.filter({
                     Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.tomorrow )
                 })
-                self.sections[.tomorrow] = noteInSection.sorted(by: { $0.position < $1.position })
+                data[period] = NoteSection(notes: notesInSection, index: sectionIndex)
                 break
-            case .future:
-                let noteInSection = noteList.filter({
+            case 2:
+                let notesInSection = noteList.filter({
                     Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.future )
                 })
-                self.sections[.future] = noteInSection.sorted(by: { $0.position < $1.position } )
+                data[period] = NoteSection(notes: notesInSection, index: sectionIndex)
+                break
+            default:
                 break
             }
         }
     }
+
 }
-
-

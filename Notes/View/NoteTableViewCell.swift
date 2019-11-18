@@ -15,6 +15,7 @@ class NoteTableViewCell: UITableViewCell {
     @IBOutlet weak var category: UILabel!
     @IBOutlet weak var reminder: UIImageView!
     
+    static let reuseIdentifier = "NoteCell"
 //    var note: Note?
     
     func onBind(_ note: Note) {
