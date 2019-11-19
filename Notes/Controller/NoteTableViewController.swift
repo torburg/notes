@@ -28,7 +28,7 @@ class NoteTableViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: nil)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: nil)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
         
         tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: NoteTableViewCell.reuseIdentifier)
         self.tableView.tableFooterView = nil
@@ -263,6 +263,11 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
         snapshot.layer.shadowRadius = 5
         snapshot.layer.shadowOpacity = 0.4
         return snapshot
+    }
+    
+    @objc func settingsButtonPressed(_ sender: UIButton) {
+        let settinsViewController = SettingsViewController()
+        navigationController?.pushViewController(settinsViewController, animated: true)
     }
 
     func setSectionsWithNotes() {

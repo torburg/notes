@@ -51,6 +51,27 @@ class FileNotebook {
         }
     }
     
+    public func loadDeletedNotes() -> [Note] {
+    
+        var notelist = [Note]()
+        notelist.append(Note(
+            position: 2,
+            content: "Короткая такая заметочка",
+            importance: .regular,
+            expirationDate: Date(),
+            category: .personal)
+        )
+        notelist.append(Note(
+        position: 0,
+        content: "Заметка уже слегка подлиннее, чем предыдущая",
+        importance: .regular,
+        expirationDate: Date.tomorrow,
+        category: .work,
+        reminder: true)
+        )
+        return notelist
+    }
+    
     private func getFileUrl() -> URL? {
         guard let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
             return nil
