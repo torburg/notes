@@ -10,15 +10,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let startViewController = NoteTableViewController()
         
-        FileNotebook.shared.loadFromFile()
-        if FileNotebook.shared.notes.isEmpty {
+        let generate: Bool = false
+        
+        if generate {
             FileNotebook.generateNotebook()
+            do {
+                try FileNotebook.shared.saveToFile()
+            } catch {
+                
+            }
+        } else {
+            FileNotebook.shared.loadFromFile()
         }
-//        do {
-//            try FileNotebook.shared.saveToFile()
-//        } catch {
-//
-//        }
         
         let navigationController = UINavigationController(rootViewController: startViewController)
         navigationController.navigationBar.barTintColor = .white

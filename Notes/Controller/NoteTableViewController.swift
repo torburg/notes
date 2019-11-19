@@ -130,7 +130,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             let deleteOp = RemoveNote(note: note, from: FileNotebook.shared)
             deleteOp.main()
             
-            self.data[tableSection]?.removeItem(identidier: note.uid)
+            self.data[tableSection]?.removeItem(note)
             
             self.tableView.deleteRows(at: [indexPath], with: .left)
             completion(true)
@@ -171,9 +171,6 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             })
             break
         case .changed:
-//            guard let cell = self.tableView.cellForRow(at: indexPath) else {
-//                return
-//            }
             guard let snapshot = self.snapshot else {
                 return
             }
@@ -203,7 +200,6 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                         return Date.future
                     }
                 }()
-                // TODO: need to save place of Note in Table
                 let note = Note(
                     uid: sourceNote.uid,
                     position: indexPath.row,
@@ -213,16 +209,13 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                     category: sourceNote.category,
                     reminder: sourceNote.reminder
                 )
+                self.data[sourceTableSection]?.removeItem(sourceNote)
                 let remove = RemoveNote(note: sourceNote, from: FileNotebook.shared)
                 remove.main()
+                self.data[tableSection]?.insertItem(note: note, index: indexPath.row)
                 let save = SaveNotes(note: note, to: FileNotebook.shared)
                 save.main()
                 
-                // TODO: Update all indexes after insertion in section
-                // TODO: Add 2 || 1 classes, one of them loads & fills table, another get and save it. may be one else to update
-                self.data[sourceTableSection]?.removeItem(identidier: sourceNote.uid)
-                self.data[tableSection]?.insertItem(note: sourceNote, index: indexPath.row)
-
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
                 self.selectedCellIndexPath = indexPath
             }

@@ -1,8 +1,8 @@
 import Foundation
 
-struct Note {
+class Note {
     let uid: String
-    let position: Int
+    var position: Int
     let content: String
     let importance: Importance
     let expirationDate: Date

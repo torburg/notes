@@ -34,29 +34,30 @@ class NoteSection {
         switch index {
         case 0:
             self.period = .today
-            self.title = "Today \(When.today.rawValue)"
+            self.title = "\(When.today.rawValue)"
         case 1:
             self.period = .tomorrow
-            self.title = "Tomorrow \(When.tomorrow.rawValue)"
+            self.title = "\(When.tomorrow.rawValue)"
         case 2:
             self.period = .future
-            self.title = "Future \(When.future.rawValue)"
+            self.title = "\(When.future.rawValue)"
         default:
             self.period = .today
-            self.title = "Today"
+            self.title = "\(When.today.rawValue)"
         }
     }
 }
 
 extension NoteSection {
     
-    func removeItem(identidier: String) {
-        self.values = self.values.filter( { $0.uid != identidier } )
+    func removeItem(_ note: Note) {
+        self.values = self.values.filter( { $0.uid != note.uid } )
+        self.values.filter( { $0.position > note.position} ).map( { $0.position -= 1 } )
     }
     
     func insertItem(note: Note, index: Int) {
         self.values.insert(note, at: index)
+        self.values.filter( { $0.position >= index} ).map( { $0.position += 1 } )
+        self.values.filter( { $0.uid == note.uid }).map( { $0.position = index })
     }
-    
-    
 }
