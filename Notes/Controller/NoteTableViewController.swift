@@ -14,7 +14,7 @@ class NoteTableViewController: UIViewController {
     var data = [ TableSection: NoteSection ]()
     
     enum TableSection: Int, CaseIterable {
-        case today = 0, tomorrow, future
+        case expired = 0, today, tomorrow, future
     }
     
     fileprivate var selectedCellIndexPath: IndexPath?
@@ -60,9 +60,11 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let period = TableSection(rawValue: section) ?? TableSection.today
+        let period = TableSection(rawValue: section) ?? TableSection.expired
         let date = Date.formatter.string(from: Date())
         switch period {
+        case TableSection.expired:
+            return "Expired"
         case TableSection.today:
             return "Today \(date)"
         case TableSection.tomorrow:
@@ -71,6 +73,14 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             return "Future"
         }
     }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if section == TableSection.expired.rawValue {
+            let header = view as! UITableViewHeaderFooterView
+            header.textLabel?.textColor = .red
+        }
+    }
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
@@ -192,8 +202,10 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 let date : Date = {
                     switch tableSection {
+                    case .expired:
+                        return Date.expired
                     case .today:
-                        return Date()
+                        return Date.today
                     case .tomorrow:
                         return Date.tomorrow
                     case .future:
@@ -229,6 +241,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.isHidden = false
             cell.alpha = 0.0
+            cell.reloadInputViews()
             UIView.animate(withDuration: 0.25, animations: {
                 snapshot.center = cell.center
                 snapshot.transform = CGAffineTransform.identity
@@ -273,17 +286,23 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             switch sectionIndex {
             case 0:
                 let notesInSection = noteList.filter({
-                    Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date() )
+                    Date.formatter.string(from: $0.expirationDate) < Date.formatter.string(from: Date.today )
                 })
                 data[period] = NoteSection(notes: notesInSection, index: sectionIndex)
                 break
             case 1:
                 let notesInSection = noteList.filter({
-                    Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.tomorrow )
+                    Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.today )
                 })
                 data[period] = NoteSection(notes: notesInSection, index: sectionIndex)
                 break
             case 2:
+                let notesInSection = noteList.filter({
+                    Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.tomorrow )
+                })
+                data[period] = NoteSection(notes: notesInSection, index: sectionIndex)
+                break
+            case 3:
                 let notesInSection = noteList.filter({
                     Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.future )
                 })

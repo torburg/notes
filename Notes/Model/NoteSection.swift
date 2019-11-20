@@ -9,12 +9,14 @@
 import Foundation
 
 enum When: String, CaseIterable {
+    case expired = "Expired"
     case today = "Today"
     case tomorrow = "Tomorrow"
     case future = "Future"
     
     static var allValues: [When] {
         return [
+            .expired,
             .today,
             .tomorrow,
             .future
@@ -33,12 +35,15 @@ class NoteSection {
 
         switch index {
         case 0:
+            self.period = .expired
+            self.title = "\(When.expired.rawValue)"
+        case 1:
             self.period = .today
             self.title = "\(When.today.rawValue)"
-        case 1:
+        case 2:
             self.period = .tomorrow
             self.title = "\(When.tomorrow.rawValue)"
-        case 2:
+        case 3:
             self.period = .future
             self.title = "\(When.future.rawValue)"
         default:
