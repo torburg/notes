@@ -52,12 +52,13 @@ extension NoteSection {
     
     func remove(_ note: Note) {
         self.values = self.values.filter( { $0.uid != note.uid } )
-        self.values.filter( { $0.position > note.position} ).map( { $0.position -= 1 } )
+        // FIXME: - Is it write to prevent warning?..
+        _ = self.values.filter( { $0.position > note.position} ).map( { $0.position -= 1 } )
     }
     
     func insert(note: Note, to index: Int) {
         self.values.insert(note, at: index)
-        self.values.filter( { $0.position >= index} ).map( { $0.position += 1 } )
-        self.values.filter( { $0.uid == note.uid }).map( { $0.position = index })
+        _ = self.values.filter( { $0.position >= index} ).map( { $0.position += 1 } )
+        _ = self.values.filter( { $0.uid == note.uid }).map( { $0.position = index })
     }
 }
