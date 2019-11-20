@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NoteViewController: UIViewController {
+class CellViewController: UIViewController {
     
     var data: Note?
 

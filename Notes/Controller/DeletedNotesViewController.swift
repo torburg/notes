@@ -26,8 +26,8 @@ class DeletedNotesViewController: UIViewController {
 
     func reloadData() {
         let notebook = FileNotebook()
-        let loadDeletedOp = LoadNotes(notebook: notebook)
-        loadDeletedOp.deleted()
+        let loadDeletedOp = LoadOperation(notebook: notebook)
+        loadDeletedOp.deletedLoad()
         guard let notes = loadDeletedOp.result else {
             return
         }

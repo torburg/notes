@@ -19,16 +19,16 @@ class FileNotebook {
         notes = notes.filter {$0.uid != uid}
     }
     
-    public func saveToFile(_ fileName: String) throws {
-        if let fileUrlValue = getFileUrl(fileName) {
+    public func save(to fileName: String) throws {
+        if let fileUrlValue = getURL(of: fileName) {
             let arr: [[String: Any]] = notes.map{$0.json}
             let jsdata = try JSONSerialization.data(withJSONObject: arr, options: [])
             try jsdata.write(to: fileUrlValue)
         }
     }
     
-    public func loadFromFile(_ fileName: String) {
-        if let fileUrlValue = getFileUrl(fileName) {
+    public func load(from fileName: String) {
+        if let fileUrlValue = getURL(of: fileName) {
             guard let data = FileManager.default.contents(atPath: fileUrlValue.path) else { return }
             do {
                 let array = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
@@ -44,28 +44,7 @@ class FileNotebook {
         }
     }
     
-    public func loadDeletedNotes() -> [Note] {
-    
-        var notelist = [Note]()
-        notelist.append(Note(
-            position: 2,
-            content: "Короткая такая заметочка",
-            importance: .regular,
-            expirationDate: Date(),
-            category: .personal)
-        )
-        notelist.append(Note(
-        position: 0,
-        content: "Заметка уже слегка подлиннее, чем предыдущая",
-        importance: .regular,
-        expirationDate: Date.tomorrow,
-        category: .work,
-        reminder: true)
-        )
-        return notelist
-    }
-    
-    private func getFileUrl(_ fileName: String) -> URL? {
+    private func getURL(of fileName: String) -> URL? {
         guard let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
             return nil
         }

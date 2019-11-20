@@ -8,16 +8,16 @@
 
 import Foundation
 
-class LoadNotes: BaseOperation {
+class LoadOperation: BaseOperation {
     var result: [Note]?
     
-    override func main() {
-        notebook.loadFromFile(storeFileName)
+    func main() {
+        notebook.load(from: storeFileName)
         result = notebook.notes
     }
     
-    func deleted() {
-        notebook.loadFromFile(deletedFileName)
+    func deletedLoad() {
+        notebook.load(from: deletedFileName)
         result = notebook.notes
     }
 }

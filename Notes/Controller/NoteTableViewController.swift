@@ -10,10 +10,9 @@ import UIKit
 
 class NoteTableViewController: UIViewController {
 
-    var noteList: [Note]?
-    var data = [ TableSection: NoteSection ]()
+    var data = [ tableSections: NoteSection ]()
     
-    enum TableSection: Int, CaseIterable {
+    enum tableSections: Int, CaseIterable {
         case today = 0, tomorrow, future
     }
     
@@ -40,7 +39,6 @@ class NoteTableViewController: UIViewController {
     }
     
     func reloadData() {
-        self.noteList = FileNotebook.shared.notes
         setSectionsWithNotes()
     }
 }
@@ -48,7 +46,7 @@ class NoteTableViewController: UIViewController {
 extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let tableSection = TableSection.allCases[section]
+        let tableSection = tableSections.allCases[section]
         guard let rows = data[tableSection] else {
             return 0
         }
@@ -56,18 +54,18 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return TableSection.allCases.count
+        return tableSections.allCases.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let period = TableSection(rawValue: section) ?? TableSection.today
+        let period = tableSections(rawValue: section) ?? tableSections.today
         let date = Date.formatter.string(from: Date())
         switch period {
-        case TableSection.today:
+        case tableSections.today:
             return "Today \(date)"
-        case TableSection.tomorrow:
+        case tableSections.tomorrow:
             return "Tomorrow"
-        case TableSection.future:
+        case tableSections.future:
             return "Future"
         }
     }
@@ -79,7 +77,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath) as! NoteTableViewCell
         
-        if let tableSection = TableSection(rawValue: indexPath.section),
+        if let tableSection = tableSections(rawValue: indexPath.section),
             let dataSection = data[tableSection] {
                 let cellModel = dataSection.values[indexPath.row]
                 cell.onBind(cellModel)
@@ -88,24 +86,19 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("maldmaldw")
-    }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let tableSection = TableSection(rawValue: indexPath.section),
+        guard let tableSection = tableSections(rawValue: indexPath.section),
             let dataSection = data[tableSection] else {
                 return
         }
         let dataCell = dataSection.values[indexPath.row]
-        // TODO: rename NoteViewController to CellViewController
-        let noteViewController = NoteViewController()
-        noteViewController.data = dataCell
+        let cellViewController = CellViewController()
+        cellViewController.data = dataCell
         
-        navigationController?.pushViewController(noteViewController, animated: true)
+        navigationController?.pushViewController(cellViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -119,25 +112,22 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
-            guard let tableSection = TableSection(rawValue: indexPath.section),
+            guard let tableSection = tableSections(rawValue: indexPath.section),
                 let dataSection = self.data[tableSection] else {
                     return
             }
             let note = dataSection.values[indexPath.row]
             
-            self.noteList = self.noteList!.filter({ $0.uid != note.uid })
-
-            let deleteOp = RemoveNote(note: note, from: FileNotebook.shared)
-            deleteOp.main()
+            let deleteOp = RemoveOperation(note, from: FileNotebook.shared)
             
             // FIXME: - No need to load notes from file, need to append data to existing file
             let noteBookToDelete = FileNotebook()
             noteBookToDelete.add(note)
-            noteBookToDelete.loadFromFile(deletedFileName)
-            let savingDeletedOp = SaveNotes(note: note, to: noteBookToDelete)
-            savingDeletedOp.deleted()
+            noteBookToDelete.load(from: deletedFileName)
+            let savingDeletedOp = SaveOperation(note, to: noteBookToDelete)
+            savingDeletedOp.deletedSave()
             
-            self.data[tableSection]?.removeItem(note)
+            self.data[tableSection]?.remove(note)
             
             self.tableView.deleteRows(at: [indexPath], with: .left)
             completion(true)
@@ -188,16 +178,16 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                 return
             }
             if indexPath != sourceIndexPath {
-                guard let sourceTableSection = TableSection(rawValue: sourceIndexPath.section),
+                guard let sourceTableSection = tableSections(rawValue: sourceIndexPath.section),
                     let dataSection = data[sourceTableSection] else {
                         return
                 }
                 let sourceNote = dataSection.values[sourceIndexPath.row]
 
-                guard let tableSection = TableSection(rawValue: indexPath.section) else {
+                guard let tableSection = tableSections(rawValue: indexPath.section) else {
                     return
                 }
-                let date : Date = {
+                let date: Date = {
                     switch tableSection {
                     case .today:
                         return Date()
@@ -216,12 +206,12 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                     category: sourceNote.category,
                     reminder: sourceNote.reminder
                 )
-                self.data[sourceTableSection]?.removeItem(sourceNote)
-                let remove = RemoveNote(note: sourceNote, from: FileNotebook.shared)
-                remove.main()
-                self.data[tableSection]?.insertItem(note: note, index: indexPath.row)
-                let save = SaveNotes(note: note, to: FileNotebook.shared)
-                save.main()
+                self.data[sourceTableSection]?.remove(sourceNote)
+
+                let remove = RemoveOperation(sourceNote, from: FileNotebook.shared)
+                
+                self.data[tableSection]?.insert(note: note, to: indexPath.row)
+                let save = SaveOperation(note, to: FileNotebook.shared)
                 
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
                 self.selectedCellIndexPath = indexPath
@@ -278,9 +268,9 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func setSectionsWithNotes() {
-        let noteList = self.noteList!
+        let noteList = FileNotebook.shared.notes
         
-        for period in TableSection.allCases {
+        for period in tableSections.allCases {
             let sectionIndex = period.rawValue
             switch sectionIndex {
             case 0:

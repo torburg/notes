@@ -10,16 +10,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let startViewController = NoteTableViewController()
         
-        let generate: Bool = false
+        let generate: Bool = true
         
         if generate {
-            FileNotebook.generateNotebook()
-            do {
-                try FileNotebook.shared.saveToFile(storeFileName)
-            } catch {
-            }
+            self.generateAppData()
         } else {
-            FileNotebook.shared.loadFromFile(storeFileName)
+            FileNotebook.shared.load(from: storeFileName)
         }
         
         let navigationController = UINavigationController(rootViewController: startViewController)
@@ -30,6 +26,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    func generateAppData() {
+        FileNotebook.generateNotebook()
+        do {
+            try FileNotebook.shared.save(to: storeFileName)
+            
+            guard let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
+                return
+            }
+            var isDir: ObjCBool = false
+            let dirUrl = path.appendingPathComponent(deletedFileName)
+            if FileManager.default.fileExists(atPath: dirUrl.path, isDirectory: &isDir), isDir.boolValue {
+                let fileUrl = dirUrl.appendingPathComponent("Note")
+                if FileManager.default.fileExists(atPath: fileUrl.path) {
+                    try FileManager.default.removeItem(at: fileUrl)
+                }
+            }
+        } catch {
+        }
     }
    
     func applicationWillResignActive(_ application: UIApplication) {

@@ -8,26 +8,28 @@
 
 import Foundation
 
-class SaveNotes: BaseOperation {
+class SaveOperation: BaseOperation {
     private let note: Note
     
-    init(note: Note, to fileNotebook: FileNotebook) {
+    init(_ note: Note, to fileNotebook: FileNotebook) {
         self.note = note
         super.init(notebook: fileNotebook)
+        
     }
     
-    override func main() {
+    func main() {
         notebook.add(note)
         do {
-            try notebook.saveToFile(storeFileName)
+            try notebook.save(to: storeFileName)
         } catch {
-            // TODO: - Log
-            print("Ошибка записи в файл \(storeFileName), \(error)")
+        // TODO: - Log
+        print("Ошибка записи в файл \(storeFileName), \(error)")
         }
     }
-    func deleted() {
+
+    func deletedSave() {
         do {
-            try notebook.saveToFile(deletedFileName)
+            try notebook.save(to: deletedFileName)
         } catch {
             // TODO: - Log
             print("Ошибка записи в файл \(deletedFileName), \(error)")

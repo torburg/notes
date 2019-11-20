@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BaseOperation: Operation {
+class BaseOperation {
     let notebook: FileNotebook
     
     init(notebook: FileNotebook) {

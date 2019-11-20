@@ -7,9 +7,7 @@ extension Note {
         result["uid"] = self.uid
         result["position"] = self.position
         result["content"] = self.content
-//        if self.importance != Importance.regular {
-            result["importance"] = self.importance.rawValue
-//        }
+        result["importance"] = self.importance.rawValue
         let date = self.expirationDate
         let dateStr = Date.formatter.string(from: date)
         result["expirationDate"] = dateStr

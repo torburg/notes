@@ -50,12 +50,12 @@ class NoteSection {
 
 extension NoteSection {
     
-    func removeItem(_ note: Note) {
+    func remove(_ note: Note) {
         self.values = self.values.filter( { $0.uid != note.uid } )
         self.values.filter( { $0.position > note.position} ).map( { $0.position -= 1 } )
     }
     
-    func insertItem(note: Note, index: Int) {
+    func insert(note: Note, to index: Int) {
         self.values.insert(note, at: index)
         self.values.filter( { $0.position >= index} ).map( { $0.position += 1 } )
         self.values.filter( { $0.uid == note.uid }).map( { $0.position = index })
