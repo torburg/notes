@@ -5,13 +5,7 @@ class FileNotebook {
     private(set) var notes: [Note] = []
     
     static var shared = FileNotebook()
-    
-    // TODO: - Make add by index
-//    if (notes.count >= index) {
-//    notes.insert(nore, at: index)
-//    } else {
-//    notes.append(note)
-//    }
+
     public func add(_ note: Note) {
         guard !containsNote(note) else { return }
         notes.append(note)
@@ -25,21 +19,20 @@ class FileNotebook {
         notes = notes.filter {$0.uid != uid}
     }
     
-    public func saveToFile() throws {
-        if let fileUrlValue = getFileUrl() {
+    public func saveToFile(_ fileName: String) throws {
+        if let fileUrlValue = getFileUrl(fileName) {
             let arr: [[String: Any]] = notes.map{$0.json}
             let jsdata = try JSONSerialization.data(withJSONObject: arr, options: [])
             try jsdata.write(to: fileUrlValue)
         }
     }
     
-    public func loadFromFile() {
-        if let fileUrlValue = getFileUrl() {
+    public func loadFromFile(_ fileName: String) {
+        if let fileUrlValue = getFileUrl(fileName) {
             guard let data = FileManager.default.contents(atPath: fileUrlValue.path) else { return }
             do {
                 let array = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
                 guard let arr = array else { return }
-                notes.removeAll()
                 for json in arr {
                     if let note = Note.parse(json: json) {
                         notes.append(note)
@@ -72,19 +65,19 @@ class FileNotebook {
         return notelist
     }
     
-    private func getFileUrl() -> URL? {
+    private func getFileUrl(_ fileName: String) -> URL? {
         guard let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
             return nil
         }
         
         var isDir: ObjCBool = false
         
-        let dirUrl = path.appendingPathComponent("Deleted notes")
+        let dirUrl = path.appendingPathComponent(fileName)
         if !FileManager.default.fileExists(atPath: dirUrl.path, isDirectory: &isDir), !isDir.boolValue {
             do {
                 try FileManager.default.createDirectory(at: dirUrl, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                print("Ошибка создания директории \"Deleted notes\", \(error)")
+                print("Ошибка создания директории \(fileName), \(error)")
                 return nil
             }
         }
@@ -137,7 +130,7 @@ class FileNotebook {
             expirationDate: Date.future,
             category: .family)
         )
-        for index in 1...2 {
+        for index in 1...5 {
             let position = index-1
             let content = "\(index)_Content"
             let importance = Importance.allCases.randomElement()!

@@ -27,6 +27,7 @@
 		8865724023844E9400F57998 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8865723E23844E9400F57998 /* SettingsViewController.xib */; };
 		88657243238486CB00F57998 /* DeletedNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88657241238486CB00F57998 /* DeletedNotesViewController.swift */; };
 		88657244238486CB00F57998 /* DeletedNotesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88657242238486CB00F57998 /* DeletedNotesViewController.xib */; };
+		886572462385A90B00F57998 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886572452385A90B00F57998 /* Constants.swift */; };
 		8866E2AA236A0CCF00AED83E /* RemoveNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866E2A9236A0CCF00AED83E /* RemoveNote.swift */; };
 		887ADE22234D2146001C031C /* LoadNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE21234D2146001C031C /* LoadNotes.swift */; };
 		887ADE24234D2151001C031C /* SaveNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887ADE23234D2151001C031C /* SaveNotes.swift */; };
@@ -71,6 +72,7 @@
 		8865723E23844E9400F57998 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Notes/Controller/SettingsViewController.xib; sourceTree = SOURCE_ROOT; };
 		88657241238486CB00F57998 /* DeletedNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedNotesViewController.swift; sourceTree = "<group>"; };
 		88657242238486CB00F57998 /* DeletedNotesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeletedNotesViewController.xib; sourceTree = "<group>"; };
+		886572452385A90B00F57998 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8866E2A9236A0CCF00AED83E /* RemoveNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNote.swift; sourceTree = "<group>"; };
 		887ADE21234D2146001C031C /* LoadNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotes.swift; sourceTree = "<group>"; };
 		887ADE23234D2151001C031C /* SaveNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNotes.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				8848F2D5236F859B00BB2EE4 /* View */,
 				880E59C422C4004D00761F2E /* Assets.xcassets */,
 				880E59BD22C4004B00761F2E /* AppDelegate.swift */,
+				886572452385A90B00F57998 /* Constants.swift */,
 				880E59C622C4004D00761F2E /* LaunchScreen.storyboard */,
 				880E59C922C4004D00761F2E /* Info.plist */,
 			);
@@ -354,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8848F2D7236F863000BB2EE4 /* NoteViewController.swift in Sources */,
+				886572462385A90B00F57998 /* Constants.swift in Sources */,
 				880E59D522CBFAA600761F2E /* FileNotebook.swift in Sources */,
 				880E59D222C4007100761F2E /* NoteExtension.swift in Sources */,
 				880E59BE22C4004B00761F2E /* AppDelegate.swift in Sources */,

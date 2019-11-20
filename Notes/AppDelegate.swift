@@ -15,12 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if generate {
             FileNotebook.generateNotebook()
             do {
-                try FileNotebook.shared.saveToFile()
+                try FileNotebook.shared.saveToFile(storeFileName)
             } catch {
-                
             }
         } else {
-            FileNotebook.shared.loadFromFile()
+            FileNotebook.shared.loadFromFile(storeFileName)
         }
         
         let navigationController = UINavigationController(rootViewController: startViewController)

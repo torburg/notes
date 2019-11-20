@@ -10,7 +10,7 @@ import UIKit
 
 class RemoveNote: BaseOperation {
     let note: Note
-    
+
     init(note: Note, from fileNotebook: FileNotebook) {
         self.note = note
         super.init(notebook: fileNotebook)
@@ -19,9 +19,9 @@ class RemoveNote: BaseOperation {
     override func main() {
         notebook.remove(with: note.uid)
         do {
-            try notebook.saveToFile()
+            try notebook.saveToFile(storeFileName)
         } catch {
-            //ToDo Log
+            // TODO: - Log
             print("Error to remove note")
         }
     }

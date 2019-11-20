@@ -10,7 +10,6 @@ import Foundation
 
 class SaveNotes: BaseOperation {
     private let note: Note
-//    private let index: IndexPath
     
     init(note: Note, to fileNotebook: FileNotebook) {
         self.note = note
@@ -20,10 +19,18 @@ class SaveNotes: BaseOperation {
     override func main() {
         notebook.add(note)
         do {
-            try notebook.saveToFile()
+            try notebook.saveToFile(storeFileName)
         } catch {
-            //ToDo Log
-            print("Ошибка записи в файл, \(error)")
+            // TODO: - Log
+            print("Ошибка записи в файл \(storeFileName), \(error)")
+        }
+    }
+    func deleted() {
+        do {
+            try notebook.saveToFile(deletedFileName)
+        } catch {
+            // TODO: - Log
+            print("Ошибка записи в файл \(deletedFileName), \(error)")
         }
     }
 }

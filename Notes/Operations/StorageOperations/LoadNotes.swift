@@ -12,7 +12,12 @@ class LoadNotes: BaseOperation {
     var result: [Note]?
     
     override func main() {
-        notebook.loadFromFile()
+        notebook.loadFromFile(storeFileName)
+        result = notebook.notes
+    }
+    
+    func deleted() {
+        notebook.loadFromFile(deletedFileName)
         result = notebook.notes
     }
 }

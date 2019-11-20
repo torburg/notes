@@ -130,6 +130,13 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             let deleteOp = RemoveNote(note: note, from: FileNotebook.shared)
             deleteOp.main()
             
+            // FIXME: - No need to load notes from file, need to append data to existing file
+            let noteBookToDelete = FileNotebook()
+            noteBookToDelete.add(note)
+            noteBookToDelete.loadFromFile(deletedFileName)
+            let savingDeletedOp = SaveNotes(note: note, to: noteBookToDelete)
+            savingDeletedOp.deleted()
+            
             self.data[tableSection]?.removeItem(note)
             
             self.tableView.deleteRows(at: [indexPath], with: .left)

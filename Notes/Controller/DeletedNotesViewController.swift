@@ -20,24 +20,19 @@ class DeletedNotesViewController: UIViewController {
         title = "Deleted Notes"
         tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: NoteTableViewCell.reuseIdentifier)
         
-        reloadDate()
+        reloadData()
         // Do any additional setup after loading the view.
     }
 
-    func reloadDate() {
-        self.noteList = FileNotebook.shared.loadDeletedNotes()
+    func reloadData() {
+        let notebook = FileNotebook()
+        let loadDeletedOp = LoadNotes(notebook: notebook)
+        loadDeletedOp.deleted()
+        guard let notes = loadDeletedOp.result else {
+            return
+        }
+        self.noteList = notes
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension DeletedNotesViewController: UITableViewDelegate, UITableViewDataSource {
