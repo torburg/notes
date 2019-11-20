@@ -212,6 +212,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 self.data[tableSection]?.insert(note: note, to: indexPath.row)
                 let save = SaveOperation(note, to: FileNotebook.shared)
+                save.main()
                 
                 self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
                 self.selectedCellIndexPath = indexPath

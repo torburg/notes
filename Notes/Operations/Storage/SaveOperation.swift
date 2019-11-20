@@ -22,8 +22,8 @@ class SaveOperation: BaseOperation {
         do {
             try notebook.save(to: storeFileName)
         } catch {
-        // TODO: - Log
-        print("Ошибка записи в файл \(storeFileName), \(error)")
+            // TODO: - Log
+            print("Ошибка записи в файл \(storeFileName), \(error)")
         }
     }
 

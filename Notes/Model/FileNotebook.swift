@@ -82,14 +82,14 @@ class FileNotebook {
         
         self.shared.add(Note(
             position: 2,
-            content: "Короткая такая заметочка",
+            content: "Short note",
             importance: .regular,
             expirationDate: Date(),
             category: .personal)
         )
         self.shared.add(Note(
             position: 0,
-            content: "Заметка уже слегка подлиннее, чем предыдущая",
+            content: "Not so short note",
             importance: .regular,
             expirationDate: Date.tomorrow,
             category: .work,
@@ -97,19 +97,19 @@ class FileNotebook {
         )
         self.shared.add(Note(
             position: 1,
-            content: "Не то, что бы прям уж очень длинная заметка, но все-таки заметно длиннее, чем те две,          которые были до этого",
+            content: "This Romeo is bleeding but you can't see hi blood",
             importance: .regular,
             expirationDate: Date.tomorrow,
             category: .personal)
         )
         self.shared.add(Note(
             position: 0,
-            content: "А у этой заметки содержание по-настоящему длинное-предлинное, даже ни в какое сравнение с          треями предыдущими не идет. А все отчего? Да просто от того, что нужно затестировать как-то             поведение ячейки таблицы, когда у нее в содержании находиться очень длинные текст. Даже не знаю,            стоит ли еще добавить что-нибудь к вышесказанному. Пожалуй, что и нет. Поэтому на сем и закончу.",
+            content: "I, I can't get these memories out of my And some kind of madness has started to evolve I, I tried so hard to let you go        But some kind of madness is swallowing me whole, yeah I have finally seen the light And I have finally realized        What you mean Oh oh And now, I need to know is this real love Or is it just madness keeping us afloat? And when I look back at all the crazy fights we had Like some kind of madness Was taking control",
             importance: .regular,
             expirationDate: Date.future,
             category: .family)
         )
-        for index in 1...5 {
+        for index in 1...2 {
             let position = index-1
             let content = "\(index)_Content"
             let importance = Importance.allCases.randomElement()!
