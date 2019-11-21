@@ -233,7 +233,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             }
             break
         default:
-            guard let cell = self.tableView.cellForRow(at: indexPath) else {
+            guard let cell = self.tableView.cellForRow(at: indexPath) as? NoteTableViewCell else {
                 return
             }
             guard  let snapshot = self.snapshot else {
@@ -242,6 +242,12 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             cell.isHidden = false
             cell.alpha = 0.0
             cell.reloadInputViews()
+            guard let tableSection = TableSection(rawValue: indexPath.section),
+                let dataSection = self.data[tableSection] else {
+                    return
+            }
+            let note = dataSection.values[indexPath.row]
+            cell.onBind(note)
             UIView.animate(withDuration: 0.25, animations: {
                 snapshot.center = cell.center
                 snapshot.transform = CGAffineTransform.identity

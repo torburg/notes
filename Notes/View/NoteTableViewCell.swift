@@ -23,6 +23,8 @@ class NoteTableViewCell: UITableViewCell {
         self.content.text = note.content
         if note.expirationDate < Date.today {
             self.content.textColor = .red
+        } else {
+            content.textColor = .black
         }
         
         switch note.importance {
