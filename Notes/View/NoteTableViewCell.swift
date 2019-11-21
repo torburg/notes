@@ -19,8 +19,13 @@ class NoteTableViewCell: UITableViewCell {
 //    var note: Note?
     
     func onBind(_ note: Note) {
-        
         content.text = note.content
+
+        if note.expirationDate < Date.today {
+            self.content.textColor = .red
+        } else {
+            content.textColor = .black
+        }
         switch note.importance {
             case .important:
                 importance.image = UIImage(named: "important_mark")
@@ -30,7 +35,6 @@ class NoteTableViewCell: UITableViewCell {
             case .regular:
                 importance.image = UIImage(named: "regular_importance_mark")
         }
-        
        
         switch note.category {
         case .personal:

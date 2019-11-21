@@ -79,12 +79,26 @@ class FileNotebook {
     }
     
     static func generateNotebook() {
-        
+        shared.add(Note(
+            position: 0,
+            content: "Первая просроченная",
+            importance: Importance.allCases.randomElement()!,
+            expirationDate: Date.expired,
+            category: .personal)
+        )
+        shared.add(Note(
+            position: 1,
+            content: "Вторая просроченная",
+            importance: Importance.allCases.randomElement()!,
+            expirationDate: Date.expired,
+            category: .work,
+            reminder: true)
+        )
         shared.add(Note(
             position: 2,
             content: "Short note",
             importance: .regular,
-            expirationDate: Date(),
+            expirationDate: Date.today,
             category: .personal)
         )
         shared.add(Note(
@@ -113,7 +127,7 @@ class FileNotebook {
             let position = index-1
             let content = "\(index)_Content"
             let importance = Importance.allCases.randomElement()!
-            let expirationDate = Date(timeInterval: 0, since: Date())
+            let expirationDate = Date.today
             let  note = Note(position: position, content: content, importance: importance, expirationDate: expirationDate)
             shared.add(note)
         }
