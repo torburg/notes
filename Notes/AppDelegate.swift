@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let generate: Bool = false
         
         if generate {
-            self.generateAppData()
+            generateAppData()
         } else {
             FileNotebook.shared.load(from: storeFileName)
         }

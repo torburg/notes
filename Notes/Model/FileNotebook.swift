@@ -80,14 +80,14 @@ class FileNotebook {
     
     static func generateNotebook() {
         
-        self.shared.add(Note(
+        shared.add(Note(
             position: 2,
             content: "Short note",
             importance: .regular,
             expirationDate: Date(),
             category: .personal)
         )
-        self.shared.add(Note(
+        shared.add(Note(
             position: 0,
             content: "Not so short note",
             importance: .regular,
@@ -95,14 +95,14 @@ class FileNotebook {
             category: .work,
             reminder: true)
         )
-        self.shared.add(Note(
+        shared.add(Note(
             position: 1,
             content: "This Romeo is bleeding but you can't see hi blood",
             importance: .regular,
             expirationDate: Date.tomorrow,
             category: .personal)
         )
-        self.shared.add(Note(
+        shared.add(Note(
             position: 0,
             content: "I, I can't get these memories out of my And some kind of madness has started to evolve I, I tried so hard to let you go        But some kind of madness is swallowing me whole, yeah I have finally seen the light And I have finally realized        What you mean Oh oh And now, I need to know is this real love Or is it just madness keeping us afloat? And when I look back at all the crazy fights we had Like some kind of madness Was taking control",
             importance: .regular,
@@ -115,7 +115,7 @@ class FileNotebook {
             let importance = Importance.allCases.randomElement()!
             let expirationDate = Date(timeInterval: 0, since: Date())
             let  note = Note(position: position, content: content, importance: importance, expirationDate: expirationDate)
-            self.shared.add(note)
+            shared.add(note)
         }
     }
 }

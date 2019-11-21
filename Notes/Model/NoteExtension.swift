@@ -4,15 +4,15 @@ extension Note {
     
     var json: [String: Any] {
         var result = [String : Any]()
-        result["uid"] = self.uid
-        result["position"] = self.position
-        result["content"] = self.content
-        result["importance"] = self.importance.rawValue
-        let date = self.expirationDate
+        result["uid"] = uid
+        result["position"] = position
+        result["content"] = content
+        result["importance"] = importance.rawValue
+        let date = expirationDate
         let dateStr = Date.formatter.string(from: date)
         result["expirationDate"] = dateStr
-        result["category"] = self.category.rawValue
-        result["reminder"] = self.reminder
+        result["category"] = category.rawValue
+        result["reminder"] = reminder
         
         return result
     }

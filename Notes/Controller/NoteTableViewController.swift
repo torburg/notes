@@ -30,7 +30,7 @@ class NoteTableViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
         
         tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: NoteTableViewCell.reuseIdentifier)
-        self.tableView.tableFooterView = nil
+        tableView.tableFooterView = nil
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGestureRecognized(_:)))
         tableView.addGestureRecognizer(longPress)
@@ -139,24 +139,24 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
 
     @objc func longPressGestureRecognized(_ longPress: UIGestureRecognizer) {
         let location = longPress.location(in: tableView)
-        guard let indexPath = self.tableView.indexPathForRow(at: location) else {
+        guard let indexPath = tableView.indexPathForRow(at: location) else {
             return
         }
         let state = longPress.state
         switch state {
         case .began:
-            self.selectedCellIndexPath = indexPath
-            guard let cell = self.tableView.cellForRow(at: indexPath) else {
+            selectedCellIndexPath = indexPath
+            guard let cell = tableView.cellForRow(at: indexPath) else {
                 return
             }
-            self.snapshot = self.getCustomSnapshotFromView(inputView: cell)
-            guard let snapshot = self.snapshot else {
+            snapshot = getCustomSnapshotFromView(inputView: cell)
+            guard let snapshot = snapshot else {
                 return
             }
             var center = cell.center
             snapshot.center = center
             snapshot.alpha = 0.0
-            self.tableView.addSubview(snapshot)
+            tableView.addSubview(snapshot)
             UIView.animate(withDuration: 0.25, animations: {
                 center.y = location.y
                 snapshot.center = center
@@ -168,13 +168,13 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             })
             break
         case .changed:
-            guard let snapshot = self.snapshot else {
+            guard let snapshot = snapshot else {
                 return
             }
             var center = snapshot.center
             center.y = location.y
             snapshot.center = center
-            guard let sourceIndexPath = self.selectedCellIndexPath  else {
+            guard let sourceIndexPath = selectedCellIndexPath  else {
                 return
             }
             if indexPath != sourceIndexPath {
@@ -206,24 +206,24 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                     category: sourceNote.category,
                     reminder: sourceNote.reminder
                 )
-                self.data[sourceTableSection]?.remove(sourceNote)
+                data[sourceTableSection]?.remove(sourceNote)
 
                 // FIXME: - is it ok?
                 _ = RemoveOperation(sourceNote, from: FileNotebook.shared)
                 
-                self.data[tableSection]?.insert(note: note, to: indexPath.row)
+                data[tableSection]?.insert(note: note, to: indexPath.row)
                 let save = SaveOperation(note, to: FileNotebook.shared)
                 save.main()
                 
-                self.tableView.moveRow(at: sourceIndexPath, to: indexPath)
-                self.selectedCellIndexPath = indexPath
+                tableView.moveRow(at: sourceIndexPath, to: indexPath)
+                selectedCellIndexPath = indexPath
             }
             break
         default:
-            guard let cell = self.tableView.cellForRow(at: indexPath) else {
+            guard let cell = tableView.cellForRow(at: indexPath) else {
                 return
             }
-            guard  let snapshot = self.snapshot else {
+            guard let snapshot = snapshot else {
                 return
             }
             cell.isHidden = false
@@ -240,9 +240,9 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func cleanup() {
-        self.selectedCellIndexPath = nil
+        selectedCellIndexPath = nil
         snapshot?.removeFromSuperview()
-        self.snapshot = nil
+        snapshot = nil
     }
     
     func getCustomSnapshotFromView(inputView: UIView) -> UIView? {

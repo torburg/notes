@@ -20,30 +20,30 @@ class NoteTableViewCell: UITableViewCell {
     
     func onBind(_ note: Note) {
         
-        self.content.text = note.content
+        content.text = note.content
         switch note.importance {
             case .important:
-                self.importance.image = UIImage(named: "important_mark")
-                self.importance.tintColor = .green
+                importance.image = UIImage(named: "important_mark")
+                importance.tintColor = .green
             case .unimportant:
-                self.importance.image = UIImage(named: "unimportant_mark")
+                importance.image = UIImage(named: "unimportant_mark")
             case .regular:
-                self.importance.image = UIImage(named: "regular_importance_mark")
+                importance.image = UIImage(named: "regular_importance_mark")
         }
         
        
         switch note.category {
         case .personal:
-            self.category.text = Category.personal.rawValue
+            category.text = Category.personal.rawValue
         case .work:
-            self.category.text = Category.work.rawValue
+            category.text = Category.work.rawValue
         case .family:
-            self.category.text = Category.family.rawValue
+            category.text = Category.family.rawValue
         }
         if note.reminder {
-            self.reminder.image = UIImage(named: "active_reminder")
+            reminder.image = UIImage(named: "active_reminder")
         } else {
-            self.reminder.image = UIImage(named: "unactive_reminder")
+            reminder.image = UIImage(named: "unactive_reminder")
         }
         
         reminder.image?.withRenderingMode(.alwaysTemplate)

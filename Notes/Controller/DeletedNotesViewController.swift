@@ -31,7 +31,7 @@ class DeletedNotesViewController: UIViewController {
         guard let notes = loadDeletedOp.result else {
             return
         }
-        self.noteList = notes
+        noteList = notes
     }
 }
 
