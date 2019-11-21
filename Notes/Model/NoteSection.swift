@@ -51,13 +51,13 @@ class NoteSection {
 extension NoteSection {
     
     func remove(_ note: Note) {
-        values = values.filter( { $0.uid != note.uid } )
-        values.filter({ $0.position > note.position}).forEach{ $0.position -= 1 }
+        values = values.filter{ $0.uid != note.uid }
+        values.filter{ $0.position > note.position }.forEach{ $0.position -= 1 }
     }
     
     func insert(note: Note, to index: Int) {
         values.insert(note, at: index)
-        values.filter( { $0.position >= index} ).forEach{ $0.position += 1 }
-        values.filter( { $0.uid == note.uid }).forEach{ $0.position = index }
+        values.filter{ $0.position >= index }.forEach{ $0.position += 1 }
+        values.filter{ $0.uid == note.uid }.forEach{ $0.position = index }
     }
 }
