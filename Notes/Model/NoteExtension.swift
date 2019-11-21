@@ -19,6 +19,7 @@ extension Note {
     
     static func parse(json: [String: Any]) -> Note? {
         
+        let uid = json["uid"] as! String
         let position = json["position"] as! Int
         guard let content = json["content"] as? String else {
             return nil
@@ -33,7 +34,7 @@ extension Note {
         if let jsonDate = json["expirationDate"] as? String {
             expirationDate = Date.formatter.date(from: jsonDate)!
         }
-        return Note(position: position, content: content, importance: importance, expirationDate: expirationDate)
+        return Note(uid: uid, position: position, content: content, importance: importance, expirationDate: expirationDate)
     }
 }
 

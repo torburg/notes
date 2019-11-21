@@ -10,7 +10,7 @@ class Note {
     let reminder: Bool
     
     init(
-        uid: String = UUID().uuidString,
+        uid: String,
         position: Int,
         content: String,
         importance: Importance,

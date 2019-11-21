@@ -128,8 +128,8 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             }
             let note = dataSection.values[indexPath.row]
             
-            _ = RemoveOperation(note, from: FileNotebook.shared)
-            
+            let removeOp = RemoveOperation(note, from: FileNotebook.shared)
+            removeOp.main()
             // FIXME: - No need to load notes from file, need to append data to existing file
             let noteBookToDelete = FileNotebook()
             noteBookToDelete.add(note)
@@ -220,8 +220,8 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                 )
                 data[sourceTableSection]?.remove(sourceNote)
 
-                // FIXME: - is it ok?
-                _ = RemoveOperation(sourceNote, from: FileNotebook.shared)
+                let removeOp = RemoveOperation(sourceNote, from: FileNotebook.shared)
+                removeOp.main()
                 
                 data[tableSection]?.insert(note: note, to: indexPath.row)
                 let save = SaveOperation(note, to: FileNotebook.shared)
@@ -323,5 +323,4 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-
 }

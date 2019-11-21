@@ -80,21 +80,24 @@ class FileNotebook {
     
     static func generateNotebook() {
         shared.add(Note(
+            uid: UUID.init().uuidString,
             position: 0,
-            content: "Первая просроченная",
+            content: "First expired",
             importance: Importance.allCases.randomElement()!,
             expirationDate: Date.expired,
             category: .personal)
         )
         shared.add(Note(
+            uid: UUID.init().uuidString,
             position: 1,
-            content: "Вторая просроченная",
+            content: "Second expired",
             importance: Importance.allCases.randomElement()!,
             expirationDate: Date.expired,
             category: .work,
             reminder: true)
         )
         shared.add(Note(
+            uid: UUID.init().uuidString,
             position: 2,
             content: "Short note",
             importance: .regular,
@@ -102,6 +105,7 @@ class FileNotebook {
             category: .personal)
         )
         shared.add(Note(
+            uid: UUID.init().uuidString,
             position: 0,
             content: "Not so short note",
             importance: .regular,
@@ -110,6 +114,7 @@ class FileNotebook {
             reminder: true)
         )
         shared.add(Note(
+            uid: UUID.init().uuidString,
             position: 1,
             content: "This Romeo is bleeding but you can't see hi blood",
             importance: .regular,
@@ -117,6 +122,7 @@ class FileNotebook {
             category: .personal)
         )
         shared.add(Note(
+            uid: UUID.init().uuidString,
             position: 0,
             content: "I, I can't get these memories out of my And some kind of madness has started to evolve I, I tried so hard to let you go        But some kind of madness is swallowing me whole, yeah I have finally seen the light And I have finally realized        What you mean Oh oh And now, I need to know is this real love Or is it just madness keeping us afloat? And when I look back at all the crazy fights we had Like some kind of madness Was taking control",
             importance: .regular,
@@ -124,11 +130,12 @@ class FileNotebook {
             category: .family)
         )
         for index in 1...2 {
+            let uid = UUID.init().uuidString
             let position = index-1
             let content = "\(index)_Content"
             let importance = Importance.allCases.randomElement()!
             let expirationDate = Date.today
-            let  note = Note(position: position, content: content, importance: importance, expirationDate: expirationDate)
+            let  note = Note(uid: uid, position: position, content: content, importance: importance, expirationDate: expirationDate)
             shared.add(note)
         }
     }
