@@ -27,6 +27,14 @@ class SaveOperation: BaseOperation {
         }
     }
 
+    func update() {
+        _ = FileNotebook.shared.notes
+            .filter{ $0.expirationDate == note.expirationDate }
+            .filter{ $0.position >= note.position }
+            .map{ $0.position += 1 }
+        main()
+    }
+
     func deletedSave() {
         do {
             try notebook.save(to: deletedFileName)

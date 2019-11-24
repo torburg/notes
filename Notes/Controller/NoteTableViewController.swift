@@ -324,3 +324,11 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 }
+
+extension NoteTableViewController {
+
+    override func viewWillAppear(_ animated: Bool) {
+        reloadData()
+        tableView.reloadData()
+    }
+}

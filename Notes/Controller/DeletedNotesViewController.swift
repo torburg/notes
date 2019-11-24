@@ -57,16 +57,50 @@ extension DeletedNotesViewController: UITableViewDataSource {
         return cell
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let note = noteList[indexPath.row]
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let restore = restoreFromDeleted(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [restore])
+    }
+
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+            let note = self.noteList[indexPath.row]
             let fileNotebook = FileNotebook()
             fileNotebook.load(from: deletedFileName)
             let removeOp = RemoveOperation(note, from: fileNotebook)
             removeOp.removeFromDeleted()
-            noteList.remove(at: indexPath.row)
+            self.noteList.remove(at: indexPath.row)
 
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+
+            completion(true)
         }
+        action.backgroundColor = .red
+        return action
+    }
+
+    func restoreFromDeleted(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: "Restore") { (action, view, completion) in
+            let note = self.noteList[indexPath.row]
+            let fileNotebook = FileNotebook()
+            fileNotebook.load(from: deletedFileName)
+            let removeOp = RemoveOperation(note, from: fileNotebook)
+            removeOp.removeFromDeleted()
+
+            let saveOp = SaveOperation.init(note, to: FileNotebook.shared)
+            saveOp.update()
+
+            self.noteList.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+
+            completion(true)
+        }
+        action.backgroundColor = .gray
+        return action
     }
 }

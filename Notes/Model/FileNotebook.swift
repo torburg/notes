@@ -8,7 +8,11 @@ class FileNotebook {
 
     public func add(_ note: Note) {
         guard !containsNote(note) else { return }
-        notes.append(note)
+        if notes.isEmpty {
+            notes.append(note)
+        } else {
+            notes.insert(note, at: note.position)
+        }
     }
     
     public func containsNote(_ note: Note) -> Bool {
