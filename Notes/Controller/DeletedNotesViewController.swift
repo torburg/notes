@@ -68,19 +68,29 @@ extension DeletedNotesViewController: UITableViewDataSource {
     }
 
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
-            let note = self.noteList[indexPath.row]
-            let fileNotebook = FileNotebook()
-            fileNotebook.load(from: deletedFileName)
-            let removeOp = RemoveOperation(note, from: fileNotebook)
-            removeOp.removeFromDeleted()
-            self.noteList.remove(at: indexPath.row)
 
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+
+            let alertController = UIAlertController(title: "", message: "Do you really want to delete note?", preferredStyle: .actionSheet)
+            let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let deleteButton = UIAlertAction(title: "Delete", style: .destructive) { _ in
+                let note = self.noteList[indexPath.row]
+                let fileNotebook = FileNotebook()
+                fileNotebook.load(from: deletedFileName)
+                let removeOp = RemoveOperation(note, from: fileNotebook)
+                removeOp.removeFromDeleted()
+                self.noteList.remove(at: indexPath.row)
+
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            alertController.addAction(cancelButton)
+            alertController.addAction(deleteButton)
+            self.present(alertController, animated: true, completion: nil)
 
             completion(true)
         }
         action.backgroundColor = .red
+
         return action
     }
 
