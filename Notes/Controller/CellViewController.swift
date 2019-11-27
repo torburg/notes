@@ -26,8 +26,6 @@ class CellViewController: UIViewController {
     
     func configureView() {
         guard let note = data else { return }
-        contentTextView.text = note.content
-
     }
 }
 
