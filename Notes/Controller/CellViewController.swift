@@ -12,21 +12,23 @@ class CellViewController: UIViewController {
     
     var data: Note?
 
+    @IBOutlet weak var contentTextView: UITextView!
+    @IBOutlet weak var importancePicker: UIPickerView!
+    @IBOutlet weak var categoryPicker: UIPickerView!
+    @IBOutlet weak var expirationDatePicker: UIDatePicker!
+    @IBAction func saveNoteButton(_ sender: Any) {
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        configureView()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func configureView() {
+        guard let note = data else { return }
     }
-    */
+}
+
+extension CellViewController {
 
 }

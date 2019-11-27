@@ -93,7 +93,7 @@ extension DeletedNotesViewController: UITableViewDataSource {
 
         return action
     }
-
+    //FIXME: - restoring note can have the same index as note in current NoteTable, and we cant' come up with right restoring position (below or above note with same position index, may be need to create list or smth else)
     func restoreFromDeleted(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: "Restore") { (action, view, completion) in
             let note = self.noteList[indexPath.row]
