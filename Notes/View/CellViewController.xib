@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CellViewController" customModule="Notes" customModuleProvider="target">
+            <connections>
+                <outlet property="categoryPicker" destination="ePv-Qj-aMg" id="hNi-1N-0n1"/>
+                <outlet property="contentTextView" destination="Eor-SJ-d5e" id="f1d-Gp-qUK"/>
+                <outlet property="expirationDatePicker" destination="6hL-3k-bD2" id="V2f-dO-h7q"/>
+                <outlet property="importancePicker" destination="aty-di-p7s" id="pg1-B7-RRH"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="Brg-MD-G0z"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Eor-SJ-d5e">
+                    <rect key="frame" x="20" y="20" width="280" height="250"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="250" id="7pR-Qb-F7o"/>
+                    </constraints>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6uV-9s-KWo" userLabel="Picker Stack View">
+                    <rect key="frame" x="20" y="285" width="280" height="205"/>
+                    <subviews>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aty-di-p7s">
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="55"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="55" id="tAD-Sp-tCh"/>
+                            </constraints>
+                        </pickerView>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePv-Qj-aMg">
+                            <rect key="frame" x="0.0" y="75" width="280" height="55"/>
+                        </pickerView>
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6hL-3k-bD2">
+                            <rect key="frame" x="0.0" y="150" width="280" height="55"/>
+                            <date key="date" timeIntervalSinceReferenceDate="596552736.20071995">
+                                <!--2019-11-27 13:05:36 +0000-->
+                            </date>
+                        </datePicker>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="ePv-Qj-aMg" firstAttribute="height" secondItem="aty-di-p7s" secondAttribute="height" id="AaN-RM-OLD"/>
+                        <constraint firstAttribute="height" constant="205" id="nQh-zs-Hcn"/>
+                        <constraint firstItem="6hL-3k-bD2" firstAttribute="height" secondItem="ePv-Qj-aMg" secondAttribute="height" id="tmw-ca-Yra"/>
+                    </constraints>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1t-9M-CGi">
+                    <rect key="frame" x="79.5" y="508" width="161" height="50"/>
+                    <color key="backgroundColor" red="0.41214966510000001" green="0.69397754840000003" blue="0.96620899439999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="161" id="Pnn-Dz-ZAd"/>
+                        <constraint firstAttribute="height" constant="50" id="TTe-gs-fQz"/>
+                    </constraints>
+                    <state key="normal" title="Save Note">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="saveNoteButton:" destination="-1" eventType="touchUpInside" id="a8c-QK-pb1"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="I1t-9M-CGi" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9Jp-Bj-2eC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="I1t-9M-CGi" secondAttribute="bottom" constant="10" id="GAl-eG-jeT"/>
+                <constraint firstItem="Eor-SJ-d5e" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Ji0-rO-wWe"/>
+                <constraint firstItem="6uV-9s-KWo" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Loj-iT-aH3"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Eor-SJ-d5e" secondAttribute="trailing" constant="20" id="QyZ-5n-ekU"/>
+                <constraint firstItem="6uV-9s-KWo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="TBS-h3-W5O"/>
+                <constraint firstItem="6uV-9s-KWo" firstAttribute="top" secondItem="Eor-SJ-d5e" secondAttribute="bottom" constant="15" id="bOS-B8-KiH"/>
+                <constraint firstItem="Eor-SJ-d5e" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="dr2-kD-yCS"/>
+                <constraint firstItem="Eor-SJ-d5e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="hE1-Tx-12n"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="136.23188405797103" y="139.95535714285714"/>
+        </view>
+    </objects>
+</document>
