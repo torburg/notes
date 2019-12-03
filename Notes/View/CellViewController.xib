@@ -42,11 +42,19 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="55" id="tAD-Sp-tCh"/>
                             </constraints>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="Crv-ry-mBS"/>
+                                <outlet property="delegate" destination="-1" id="5gf-mn-MTb"/>
+                            </connections>
                         </pickerView>
                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePv-Qj-aMg">
                             <rect key="frame" x="0.0" y="75" width="280" height="55"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="Z1J-vt-JsH"/>
+                                <outlet property="delegate" destination="-1" id="Ni1-0l-hE5"/>
+                            </connections>
                         </pickerView>
-                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6hL-3k-bD2">
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6hL-3k-bD2">
                             <rect key="frame" x="0.0" y="150" width="280" height="55"/>
                             <date key="date" timeIntervalSinceReferenceDate="596552736.20071995">
                                 <!--2019-11-27 13:05:36 +0000-->
