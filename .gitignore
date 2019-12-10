@@ -42,6 +42,7 @@ xcuserdata
 # Mac OS X temporary files that should never be committed
 
 .DS_Store
+Notes/.DS_Store
 .AppleDouble
 .LSOverride
 
