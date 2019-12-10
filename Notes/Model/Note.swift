@@ -1,6 +1,6 @@
 import Foundation
 
-class Note {
+struct Note {
     let uid: String
     var position: Int
     let content: String

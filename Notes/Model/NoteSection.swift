@@ -58,15 +58,12 @@ extension NoteSection {
     func remove(_ note: Note) {
         if !values.isEmpty {
             values = values.filter{ $0.uid != note.uid }
-            values.filter{ $0.position > note.position }.forEach{ $0.position -= 1 }
         }
     }
     
     func insert(note: Note, to index: Int) {
         if !values.isEmpty {
-            values.filter{ $0.position >= index }.forEach{ $0.position += 1 }
             values.insert(note, at: index)
-            values.filter{ $0.uid == note.uid }.first?.position = index//forEach{ $0.position = index }
         } else {
             values.append(note)
         }

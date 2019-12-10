@@ -62,7 +62,7 @@
 		880E5A0922E758C700761F2E /* TestFileNotebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFileNotebook.swift; sourceTree = "<group>"; };
 		8819924522FA09A900A4EA4C /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
 		88199274230497CC00A4EA4C /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		881992762304AB8100A4EA4C /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
+		881992762304AB8100A4EA4C /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NoteTableViewCell.swift; path = ../View/NoteTableViewCell.swift; sourceTree = "<group>"; };
 		881992772304AB8100A4EA4C /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
 		8819927D2304C2C000A4EA4C /* NoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
 		88277737236E3FE6004C4A2A /* NoteSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSection.swift; sourceTree = "<group>"; };
@@ -165,6 +165,7 @@
 			children = (
 				8819924522FA09A900A4EA4C /* NoteTableViewController.swift */,
 				8848F2D6236F863000BB2EE4 /* CellViewController.swift */,
+				881992762304AB8100A4EA4C /* NoteTableViewCell.swift */,
 				8865723D23844E9400F57998 /* SettingsViewController.swift */,
 				88657241238486CB00F57998 /* DeletedNotesViewController.swift */,
 			);
@@ -177,7 +178,6 @@
 				88199274230497CC00A4EA4C /* UIViewExtension.swift */,
 				88657242238486CB00F57998 /* DeletedNotesViewController.xib */,
 				8819927D2304C2C000A4EA4C /* NoteViewController.xib */,
-				881992762304AB8100A4EA4C /* NoteTableViewCell.swift */,
 				8848F2E423736C1400BB2EE4 /* NoteTableViewController.xib */,
 				8865723E23844E9400F57998 /* SettingsViewController.xib */,
 				881992772304AB8100A4EA4C /* NoteTableViewCell.xib */,
