@@ -37,12 +37,12 @@ class NoteTableViewCell: UITableViewCell {
         }
        
         switch note.category {
-        case .personal:
-            category.text = Category.personal.rawValue
-        case .work:
-            category.text = Category.work.rawValue
-        case .family:
-            category.text = Category.family.rawValue
+            case .personal:
+                category.text = Category.personal.rawValue
+            case .work:
+                category.text = Category.work.rawValue
+            case .family:
+                category.text = Category.family.rawValue
         }
         if note.reminder {
             reminder.image = UIImage(named: "active_reminder")

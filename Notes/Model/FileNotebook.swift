@@ -7,7 +7,6 @@ class FileNotebook {
     static var shared = FileNotebook()
 
     public func add(_ note: Note) {
-        guard !containsNote(note) else { return }
         if notes.isEmpty {
             notes.append(note)
         } else {
@@ -133,13 +132,22 @@ class FileNotebook {
             expirationDate: Date.future,
             category: .family)
         )
+        shared.add(Note(
+            uid: UUID.init().uuidString,
+            position: 0,
+            content: "Super future",
+            importance: .regular,
+            expirationDate: Date(timeInterval: TimeInterval(exactly: 900000)!, since: Date.today),
+            category: .family)
+        )
         for index in 1...2 {
             let uid = UUID.init().uuidString
             let position = index-1
             let content = "\(index)_Content"
             let importance = Importance.allCases.randomElement()!
             let expirationDate = Date.today
-            let  note = Note(uid: uid, position: position, content: content, importance: importance, expirationDate: expirationDate)
+            let category = Category.personal
+            let note = Note(uid: uid, position: position, content: content, importance: importance, expirationDate: expirationDate, category: category)
             shared.add(note)
         }
     }

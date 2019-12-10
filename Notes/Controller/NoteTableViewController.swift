@@ -314,7 +314,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
                 break
             case 3:
                 let notesInSection = noteList.filter({
-                    Date.formatter.string(from: $0.expirationDate) == Date.formatter.string(from: Date.future )
+                    Date.formatter.string(from: $0.expirationDate) >= Date.formatter.string(from: Date.future )
                 })
                 data[period] = NoteSection(notes: notesInSection, index: sectionIndex)
                 break

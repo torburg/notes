@@ -34,7 +34,13 @@ extension Note {
         if let jsonDate = json["expirationDate"] as? String {
             expirationDate = Date.formatter.date(from: jsonDate)!
         }
-        return Note(uid: uid, position: position, content: content, importance: importance, expirationDate: expirationDate)
+
+        var category = Category.personal
+        if let jsonCategory = json["category"] as? String {
+            category = Category(rawValue: jsonCategory)!
+        }
+
+        return Note(uid: uid, position: position, content: content, importance: importance, expirationDate: expirationDate, category: category)
     }
 }
 

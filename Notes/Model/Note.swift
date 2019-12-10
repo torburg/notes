@@ -15,7 +15,7 @@ struct Note {
         content: String,
         importance: Importance,
         expirationDate: Date,
-        category: Category = .personal,
+        category: Category,
         reminder: Bool = false
     ) {
         self.uid = uid
@@ -32,10 +32,18 @@ enum Importance : String, CaseIterable {
     case unimportant = "Unimportant"
     case regular = "Regular"
     case important = "Important"
+
+    static var allCases: [Importance] {
+        return [.unimportant, .regular, .important]
+    }
 }
 
 enum Category : String, CaseIterable {
     case personal = "Personal"
     case work = "Work"
     case family = "Family"
+
+    static var allCases: [Category] {
+        return [.personal, .work, .family]
+    }
 }

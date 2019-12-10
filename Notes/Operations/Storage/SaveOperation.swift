@@ -18,7 +18,12 @@ class SaveOperation: BaseOperation {
     }
     
     func main() {
-        notebook.add(note)
+        if notebook.containsNote(note) {
+            notebook.remove(with: note.uid)
+            notebook.add(note)
+        } else {
+            notebook.add(note)
+        }
         do {
             try notebook.save(to: storeFileName)
         } catch {
