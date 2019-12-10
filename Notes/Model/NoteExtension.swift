@@ -30,11 +30,16 @@ extension Note {
             importance = Importance(rawValue: jsonImportance)!
         }
         
+        var category = Category.personal
+        if let jsonCategory = json["category"] as? String {
+            category = Category(rawValue: jsonCategory)!
+        }
+
         var expirationDate = Date()
         if let jsonDate = json["expirationDate"] as? String {
             expirationDate = Date.formatter.date(from: jsonDate)!
         }
-        return Note(uid: uid, position: position, content: content, importance: importance, expirationDate: expirationDate)
+        return Note(uid: uid, position: position, content: content, importance: importance, expirationDate: expirationDate, category: category)
     }
 }
 

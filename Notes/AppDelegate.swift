@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let startViewController = NoteTableViewController()
         
-        let generate: Bool = true
+        let generate: Bool = false
         
         if generate {
             generateAppData()

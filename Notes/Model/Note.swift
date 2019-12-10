@@ -15,7 +15,7 @@ class Note {
         content: String,
         importance: Importance,
         expirationDate: Date,
-        category: Category = .personal,
+        category: Category,
         reminder: Bool = false
     ) {
         self.uid = uid

@@ -18,7 +18,12 @@ class SaveOperation: BaseOperation {
     }
     
     func main() {
-        notebook.add(note)
+        if notebook.containsNote(note) {
+            notebook.remove(with: note.uid)
+            notebook.add(note)
+        } else {
+            notebook.add(note)
+        }
         do {
             try notebook.save(to: storeFileName)
         } catch {
@@ -28,6 +33,7 @@ class SaveOperation: BaseOperation {
     }
 
     func update() {
+        //FIXME: - is it nornal to do like this??
         _ = FileNotebook.shared.notes
             .filter{ $0.expirationDate == note.expirationDate }
             .filter{ $0.position >= note.position }

@@ -16,7 +16,35 @@ class CellViewController: UIViewController {
     @IBOutlet weak var importancePicker: UIPickerView!
     @IBOutlet weak var categoryPicker: UIPickerView!
     @IBOutlet weak var expirationDatePicker: UIDatePicker!
-    @IBAction func saveNoteButton(_ sender: Any) {
+    @IBAction func saveNoteButton(_ sender: UIButton) {
+        guard let note = data else {
+            return
+        }
+        guard let content = contentTextView.text, !content.isEmpty else {
+            let alert = UIAlertController(title: "Text field is empty",
+                                          message: nil,
+                                          preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        let importanceIndex = importancePicker.selectedRow(inComponent: 0)
+        let importance = Importance.allCases[importanceIndex]
+        let expirationDate = expirationDatePicker.date
+        let categoryIndex = categoryPicker.selectedRow(inComponent: 0)
+        let category = Category.allCases[categoryIndex]
+        let noteToSave = Note(uid: note.uid,
+                              position: note.position,
+                              content: content,
+                              importance: importance,
+                              expirationDate: expirationDate,
+                              category: category,
+                              reminder: false)
+        let save = SaveOperation(noteToSave, to: FileNotebook.shared)
+        save.main()
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
