@@ -73,9 +73,11 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
         if section == tableSections.expired.rawValue {
-            let header = view as! UITableViewHeaderFooterView
             header.textLabel?.textColor = .red
+        } else {
+            header.textLabel?.textColor = hexStringToUIColor(hex: "#46c855")
         }
     }
 
@@ -86,7 +88,7 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath) as! NoteTableViewCell
-        
+        cell.selectionStyle = .none
         if let tableSection = tableSections(rawValue: indexPath.section),
             let dataSection = data[tableSection] {
                 let cellModel = dataSection.values[indexPath.row]
@@ -280,10 +282,10 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
         }
         UIGraphicsEndImageContext()
         let snapshot = UIImageView(image: image)
-        snapshot.layer.masksToBounds = false
-        snapshot.layer.cornerRadius = 0
+        snapshot.layer.masksToBounds = true
+        snapshot.layer.cornerRadius = 15
         snapshot.layer.shadowOffset = CGSize(width: -5, height: 0)
-        snapshot.layer.shadowRadius = 5
+        snapshot.layer.shadowRadius = 15
         snapshot.layer.shadowOpacity = 0.4
         return snapshot
     }

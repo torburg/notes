@@ -22,8 +22,6 @@ class CellViewController: UIViewController {
     }
 
     private func saveNote() {
-        print("save pressed")
-
         guard let content = contentTextView.text,
             !content.isEmpty,
             contentTextView.text != placeholder else {
@@ -62,10 +60,10 @@ class CellViewController: UIViewController {
     }
 
     func configureView() {
+        contentTextView.returnKeyType = .done
         guard let note = data else {
             contentTextView.text = placeholder
             contentTextView.textColor = .lightGray
-            contentTextView.returnKeyType = .done
             return
         }
         contentTextView.text = note.content
@@ -76,6 +74,12 @@ class CellViewController: UIViewController {
         let categoryIndex = Category.allCases.firstIndex(of: category)!
         categoryPicker.selectRow(categoryIndex, inComponent: 0, animated: false)
         expirationDatePicker.setDate(note.expirationDate, animated: false)
+    }
+}
+
+extension CellViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
 
@@ -133,18 +137,20 @@ extension CellViewController: UITextViewDelegate {
 
     public func textViewDidEndEditing(_ textView: UITextView) {
         contentTextView.text = textView.text
-        let content = contentTextView.text!
-        let importanceIndex = importancePicker.selectedRow(inComponent: 0)
-        let importance = Importance.allCases[importanceIndex]
-        let categoryIndex = categoryPicker.selectedRow(inComponent: 0)
-        let category = Category.allCases[categoryIndex]
-        data = Note(uid: UUID().uuidString,
-                    position: 0,
-                    content: content,
-                    importance: importance,
-                    expirationDate: expirationDatePicker.date,
-                    category: category,
-                    reminder: false
-        )
+        if data == nil {
+            let content = contentTextView.text!
+            let importanceIndex = importancePicker.selectedRow(inComponent: 0)
+            let importance = Importance.allCases[importanceIndex]
+            let categoryIndex = categoryPicker.selectedRow(inComponent: 0)
+            let category = Category.allCases[categoryIndex]
+            data = Note(uid: UUID().uuidString,
+                        position: 0,
+                        content: content,
+                        importance: importance,
+                        expirationDate: expirationDatePicker.date,
+                        category: category,
+                        reminder: false
+            )
+        }
     }
 }

@@ -26,14 +26,14 @@ class NoteTableViewCell: UITableViewCell {
         } else {
             content.textColor = .black
         }
+        importance.layer.cornerRadius = importance.frame.width / 2
         switch note.importance {
             case .important:
-                importance.image = UIImage(named: "important_mark")
-                importance.tintColor = .green
+                importance.backgroundColor = .red
             case .unimportant:
-                importance.image = UIImage(named: "unimportant_mark")
+                importance.backgroundColor = .green
             case .regular:
-                importance.image = UIImage(named: "regular_importance_mark")
+                importance.backgroundColor = .gray
         }
        
         switch note.category {
