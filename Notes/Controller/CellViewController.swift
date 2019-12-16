@@ -11,22 +11,31 @@ import UIKit
 class CellViewController: UIViewController {
     
     var data: Note?
+    let placeholder = "Type note text here"
 
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var importancePicker: UIPickerView!
     @IBOutlet weak var categoryPicker: UIPickerView!
     @IBOutlet weak var expirationDatePicker: UIDatePicker!
     @IBAction func saveNoteButton(_ sender: UIButton) {
-        guard let note = data else {
-            return
+        saveNote()
+    }
+
+    private func saveNote() {
+        print("save pressed")
+
+        guard let content = contentTextView.text,
+            !content.isEmpty,
+            contentTextView.text != placeholder else {
+                let alert = UIAlertController(title: "Text field is empty",
+                                              message: nil,
+                                              preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(action)
+                present(alert, animated: true, completion: nil)
+                return
         }
-        guard let content = contentTextView.text, !content.isEmpty else {
-            let alert = UIAlertController(title: "Text field is empty",
-                                          message: nil,
-                                          preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+        guard let note = data else {
             return
         }
         let importanceIndex = importancePicker.selectedRow(inComponent: 0)
@@ -53,7 +62,12 @@ class CellViewController: UIViewController {
     }
 
     func configureView() {
-        guard let note = data else { return }
+        guard let note = data else {
+            contentTextView.text = placeholder
+            contentTextView.textColor = .lightGray
+            contentTextView.returnKeyType = .done
+            return
+        }
         contentTextView.text = note.content
         let importance = note.importance
         let importanceIndex = Importance.allCases.firstIndex(of: importance)!
@@ -90,5 +104,47 @@ extension CellViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         default:
             return ""
         }
+    }
+}
+
+extension CellViewController: UITextViewDelegate {
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            contentTextView.resignFirstResponder()
+        }
+        return true
+    }
+
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        if contentTextView.text == placeholder {
+            contentTextView.text = ""
+            contentTextView.textColor = .black
+        }
+    }
+
+    public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        if contentTextView.text.isEmpty {
+            contentTextView.text = placeholder
+            contentTextView.textColor = .lightGray
+        }
+        return true
+    }
+
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        contentTextView.text = textView.text
+        let content = contentTextView.text!
+        let importanceIndex = importancePicker.selectedRow(inComponent: 0)
+        let importance = Importance.allCases[importanceIndex]
+        let categoryIndex = categoryPicker.selectedRow(inComponent: 0)
+        let category = Category.allCases[categoryIndex]
+        data = Note(uid: UUID().uuidString,
+                    position: 0,
+                    content: content,
+                    importance: importance,
+                    expirationDate: expirationDatePicker.date,
+                    category: category,
+                    reminder: false
+        )
     }
 }

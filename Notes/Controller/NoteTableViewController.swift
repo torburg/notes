@@ -26,7 +26,7 @@ class NoteTableViewController: UIViewController {
         title = "Notes"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
-                                                            action: nil)
+                                                            action: #selector(createNoteButtonPressed))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
         
         tableView.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: NoteTableViewCell.reuseIdentifier)
@@ -118,6 +118,11 @@ extension NoteTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = deleteAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete])
+    }
+
+    @objc func createNoteButtonPressed(_ sender: UIButton) {
+        let cellViewController = CellViewController()
+        navigationController?.pushViewController(cellViewController, animated: true)
     }
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
